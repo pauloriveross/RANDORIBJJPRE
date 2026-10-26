@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0d0d">
+  <meta name="description" content="Randori BJJ — conoce el Brazilian Jiu-Jitsu y agenda una clase de prueba gratis.">
+  <title>Randori BJJ — Tu primera clase empieza aquí</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--black:#0d0d0d;--panel:#171717;--panel2:#202020;--white:#fff;--paper:#f4f4f2;--ink:#111;--muted:#a8a8a8;--line:#393939;--red:#d6001c;--red-dark:#ae0017;--max:1200px;--display:'Barlow Condensed',Impact,sans-serif;--body:'Manrope',Arial,sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:82px}body{margin:0;background:var(--black);color:var(--white);font-family:var(--body);font-size:15px;line-height:1.55}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transparent}img{display:block;max-width:100%}::selection{background:var(--red);color:#fff}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin-inline:auto}.eyebrow{display:flex;align-items:center;gap:10px;color:#bcbcbc;font-size:11px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}.eyebrow:before{content:'';width:23px;height:2px;background:var(--red)}.display{font-family:var(--display);font-weight:800;line-height:.88;letter-spacing:-.025em;text-transform:uppercase}.section-title{font-family:var(--display);font-size:clamp(42px,7vw,78px);font-weight:800;line-height:.9;letter-spacing:-.02em;text-transform:uppercase;margin:14px 0}.copy{color:#bdbdbd;max-width:52ch}.btn{display:inline-flex;min-height:52px;align-items:center;justify-content:center;gap:12px;padding:0 21px;border:1px solid transparent;background:var(--red);color:#fff;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .18s,transform .18s,border-color .18s}.btn:hover{background:#f00d2b;transform:translateY(-2px)}.btn:active{transform:translateY(1px) scale(.99)}.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ff6173;outline-offset:3px}.btn-secondary{background:transparent;border-color:#686868}.btn-secondary:hover{background:#222;border-color:#fff}.btn-dark{background:var(--black);color:#fff}.btn-dark:hover{background:#2a2a2a}.arrow{font-size:18px;line-height:0}.muted{color:var(--muted)}
+
+    /* Entry reveal: cubre el viewport real (dvh), va por encima de todo y se elimina del DOM al terminar. */
+    .intro-mark{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;z-index:9999;display:grid;place-items:center;background:var(--black);pointer-events:none;animation:introOut .65s cubic-bezier(.7,0,.2,1) .25s forwards}.intro-mark span{font:900 clamp(28px,9vw,76px)/.85 var(--display);letter-spacing:.02em;animation:markIn .5s ease-out both}.intro-mark b{color:var(--red)}@keyframes markIn{from{opacity:0;transform:translateY(14px);clip-path:inset(0 100% 0 0)}to{opacity:1;transform:none;clip-path:inset(0)}}@keyframes introOut{to{opacity:0;visibility:hidden}}
+
+    .site-header{height:76px;position:sticky;top:0;z-index:50;background:rgba(13,13,13,.97);border-bottom:1px solid #272727}.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:11px;min-width:max-content}.brand img{width:48px;height:48px;object-fit:contain;background:white;border-radius:50%;border:1px solid #ddd}.brand-word{font:800 21px/.85 var(--display);letter-spacing:.035em;text-transform:uppercase}.brand-word small{display:block;margin-top:5px;font:700 9px/1 var(--body);letter-spacing:.19em;color:#aaa}.nav-links{display:none;align-items:center;gap:25px;color:#ccc;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.nav-links a:hover{color:#fff}.nav .btn{min-height:42px;padding:0 13px;font-size:10px;white-space:nowrap}
+
+    /* ===== HERO ===== */
+    /* Base (mobile y tablet): texto arriba, modelo 3D abajo. Nunca se superponen. */
+    .hero{position:relative;display:flex;flex-direction:column;min-height:0;overflow:hidden;background:var(--black);isolation:isolate}
+    .hero:after{content:'BJJ';position:absolute;right:-.06em;bottom:-.1em;font:900 clamp(140px,40vw,260px)/.75 var(--display);letter-spacing:-.07em;color:#121212;pointer-events:none;z-index:0}
+    .hero-copy{order:1;position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:34px 0 18px;width:calc(100% - 40px);max-width:1400px;margin-inline:auto}
+    .hero-canvas{background:radial-gradient(ellipse 60% 55% at 50% 50%, #1c1c1c 0%, transparent 70%);order:2;position:relative;z-index:1;display:block;width:100%;height:min(70vw,380px);min-height:260px;cursor:grab;outline:none}
+    .hero-canvas:active{cursor:grabbing}
+    .hero h1{font-size:clamp(38px,9vw,54px);margin:14px 0 16px;max-width:12ch}.hero h1 em{font-style:normal;color:var(--red)}.hero-copy .copy{font-size:14px;max-width:46ch;margin:0 0 22px}.hero-actions{display:flex;flex-wrap:wrap;gap:10px}.quick-links{display:flex;align-items:center;gap:17px;margin-top:19px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.quick-links a{color:#b6b6b6;display:flex;align-items:center;gap:6px}.quick-links a:hover{color:white}.quick-links .dot{color:var(--red)}
+    .belt-error{position:absolute;z-index:3;left:14px;bottom:14px;margin:0;padding:9px 12px;background:#0d0d0d;border-left:3px solid var(--red);color:#ffd7dc;font-size:11px;max-width:min(360px,calc(100% - 28px))}
+    @media(max-width:699px){.hero-copy .copy,.hero-copy .quick-links{display:none}}
+    @media(min-width:700px){
+      .hero-copy{width:calc(100% - 64px);padding:44px 0 22px}
+      .hero h1{font-size:clamp(56px,6.8vw,88px);max-width:13ch}
+      .hero-canvas{height:420px}
+    }
+    /* Desktop: dos columnas. El texto a la izquierda, el modelo en su propia columna a la derecha. */
+    @media(min-width:1000px){
+      .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:660px;align-items:stretch}
+      .hero:after{right:-.06em;top:2.1em;bottom:auto;font-size:clamp(170px,32vw,470px)}
+      .hero-copy{grid-column:1;grid-row:1;order:0;align-self:center;width:auto;max-width:none;margin:0;padding:0 0 0 max(32px,calc((100vw - var(--max))/2));background:transparent;text-align:left}
+      .hero-canvas{grid-column:2;grid-row:1;order:0;height:100%;min-height:660px}
+    }
+    @media(max-width:999px){ .hero:after{display:none} }
+    .proof-strip{background:var(--paper);color:var(--ink);padding:16px 0}.proof-inner{display:flex;align-items:center;gap:13px}.proof-symbol{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #bbb;font:800 19px var(--display)}.proof-inner p{margin:0;font-size:12px;font-weight:700}.proof-inner span{color:#666;font-weight:500}
+    .gallery-section{padding:70px 0 76px;background:#f4f4f2;color:#111}.gallery-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:24px}.gallery-head .copy{color:#666;margin:0;max-width:340px;font-size:12px}.gallery-track{display:grid;grid-auto-columns:minmax(230px,72vw);grid-auto-flow:column;gap:11px;overflow-x:auto;padding:0 0 12px;scroll-snap-type:x mandatory;scrollbar-color:#777 transparent}.gallery-item{height:265px;position:relative;background:#d7d7d5;overflow:hidden;scroll-snap-align:start}.gallery-item:nth-child(2){background:#c9c9c6;height:220px;margin-top:45px}.gallery-item:nth-child(3){background:#dfdfdd}.gallery-item:nth-child(4){background:#bfc0bd;height:235px;margin-top:30px}.gallery-item:before{content:'';position:absolute;inset:0;background:linear-gradient(147deg,transparent 38%,rgba(0,0,0,.18));}
+    /* Image placeholder textures, not pretend photography. */
+    .gallery-item:after{content:'';position:absolute;left:14px;right:14px;bottom:17px;height:1px;background:rgba(0,0,0,.28)}.placeholder-label{position:absolute;left:14px;top:14px;z-index:1;padding:6px 8px;background:rgba(255,255,255,.82);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.gallery-item strong{position:absolute;z-index:1;left:14px;bottom:24px;font:800 27px/.9 var(--display);text-transform:uppercase}.gallery-item .abstract{position:absolute;inset:0;display:grid;place-items:center;color:#a1a19e;font:900 116px/.8 var(--display);letter-spacing:-.08em}.gallery-item:nth-child(2) .abstract{color:#999}.gallery-item:nth-child(4) .abstract{color:#8e8f8b}
+    .schedule-section{padding:74px 0 82px;background:#111}.section-heading{display:flex;flex-direction:column;gap:12px;margin-bottom:26px}.section-heading .copy{margin:0;font-size:13px}.schedule-tabs,.plan-tabs{display:flex;gap:0;border-bottom:1px solid #4a4a4a;overflow-x:auto;scrollbar-width:none}.schedule-tabs button,.plan-tabs button{flex:1;min-width:max-content;min-height:47px;padding:0 15px;border:0;border-bottom:3px solid transparent;background:transparent;color:#999;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.schedule-tabs button[aria-selected=true],.plan-tabs button[aria-selected=true]{color:#fff;border-color:var(--red)}.schedule-list{display:grid;grid-template-columns:1fr;margin-top:12px}.schedule-row{display:grid;grid-template-columns:minmax(90px,.7fr) 1fr;gap:14px;padding:17px 0;border-bottom:1px solid #333}.schedule-day{font:700 18px/.9 var(--display);text-transform:uppercase}.schedule-day small{display:block;margin-top:6px;font:600 9px/1.3 var(--body);letter-spacing:.1em;color:#888}.schedule-info{font-size:12px}.schedule-info strong{display:block;margin-bottom:3px;font-size:13px}.schedule-info span{color:#999}.schedule-note{color:#888;font-size:10px;margin-top:15px}
+    .pricing-section{padding:76px 0 82px;background:#e9e9e7;color:#111}.pricing-section .eyebrow{color:#555}.pricing-section .section-heading .copy{color:#555}.plan-tabs{border-color:#b9b9b6}.plan-tabs button{color:#777}.plan-tabs button[aria-selected=true]{color:#111;border-color:var(--red)}.plan-panel{position:relative;margin-top:22px;background:#fff;padding:23px 20px 21px;border:1px solid #d1d1ce}.popular-tag{position:absolute;right:0;top:0;background:var(--red);color:#fff;padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.plan-name{font:800 45px/.9 var(--display);text-transform:uppercase;margin:4px 0}.plan-price{font-size:13px;color:#666;margin:9px 0 21px}.plan-price strong{display:block;color:#111;font:700 22px/1.3 var(--body)}.benefit-list{padding:0;margin:0 0 24px;list-style:none;display:grid;gap:12px}.benefit-list li{display:flex;align-items:flex-start;gap:10px;font-size:12px}.check{color:var(--red);font-weight:900}.plan-panel .btn{width:100%}.plan-caption{font-size:10px;color:#777;margin:13px 0 0}
+    .faq-section{padding:76px 0 82px;background:#fff;color:#111}.faq-layout{display:grid;gap:25px}.faq-layout .copy{color:#686868;font-size:13px}.faq-list{border-top:1px solid #ccc}.faq-list details{border-bottom:1px solid #ccc}.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:15px;align-items:center;padding:19px 0;font:700 17px/1.2 var(--display);text-transform:uppercase}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:'+';font:500 24px/1 var(--body);color:var(--red)}.faq-list details[open] summary:after{content:'−'}.faq-list details p{margin:0;padding:0 30px 19px 0;max-width:65ch;color:#666;font-size:12px}
+    .booking-section{padding:72px 0 82px;background:var(--red)}.booking-layout{display:grid;gap:26px}.booking-section .eyebrow{color:#ffe2e5}.booking-section .eyebrow:before{background:#fff}.booking-section h2{font-size:clamp(49px,10vw,92px);max-width:9ch;margin:15px 0}.booking-section .copy{color:#ffe4e7;font-size:13px}.booking-form{display:grid;gap:12px;background:#fff;padding:19px;color:#111}.field{display:grid;gap:6px}.field label{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.field input,.field select{width:100%;min-height:46px;border:1px solid #ccc;background:#fff;padding:0 11px;color:#111;font-size:12px}.field input::placeholder{color:#888}.booking-form .btn{width:100%;background:#111}.booking-form .btn:hover{background:#333}.form-note{margin:0;color:#666;font-size:10px}.form-status{min-height:18px;margin:0;color:#111;font-size:11px;font-weight:700}
+    .location-section{padding:70px 0 66px;background:#111}.location-layout{display:grid;gap:20px}.location-copy .copy{font-size:13px}.map-frame{height:270px;width:100%;border:0;filter:grayscale(1) contrast(1.05);background:#242424}.map-wrap{position:relative;overflow:hidden;border:1px solid #3b3b3b}.map-label{position:absolute;left:11px;top:11px;z-index:1;background:#0d0d0d;padding:6px 8px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.address-block{display:flex;align-items:flex-start;gap:12px;margin:17px 0 21px}.address-pin{color:var(--red);font-size:20px}.address-block strong{display:block;font-size:13px}.address-block span{display:block;color:#aaa;font-size:11px}.location-actions{display:flex;flex-wrap:wrap;gap:9px}.location-actions .btn{min-height:46px;padding:0 14px;font-size:10px}
+    footer{background:#070707;border-top:1px solid #272727;padding:23px 0 78px;color:#999;font-size:10px}.footer-inner{display:flex;flex-direction:column;gap:14px}.footer-brand{display:flex;align-items:center;gap:8px;color:#fff;font:700 16px var(--display);text-transform:uppercase}.footer-brand img{width:28px;height:28px;object-fit:contain;background:#fff;border-radius:50%}.footer-links{display:flex;flex-wrap:wrap;gap:15px}.footer-links a:hover{color:#fff}.mobile-bottom{position:fixed;z-index:49;left:0;right:0;bottom:0;padding:9px 14px calc(9px + env(safe-area-inset-bottom));background:rgba(13,13,13,.96);border-top:1px solid #343434;display:flex;justify-content:center}.mobile-bottom .btn{width:min(100%,500px);min-height:46px}
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}.reveal.visible{opacity:1;transform:none}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+    @media(min-width:700px){.wrap{width:min(var(--max),calc(100% - 64px))}.nav-links{display:flex}.gallery-section,.schedule-section,.pricing-section,.faq-section,.location-section{padding-top:96px;padding-bottom:100px}.gallery-track{grid-auto-columns:1fr;grid-auto-flow:initial;overflow:visible;align-items:start}.gallery-item{height:340px}.gallery-item:nth-child(2){height:280px;margin-top:45px}.gallery-item:nth-child(4){height:300px;margin-top:28px}.gallery-item strong{font-size:34px}.schedule-list{grid-template-columns:1fr 1fr;column-gap:34px}.schedule-row{grid-template-columns:100px 1fr}.plan-panel{padding:34px 36px;max-width:none;margin-top:28px;display:grid;grid-template-columns:.86fr 1.14fr;column-gap:46px;align-items:center}.plan-panel .eyebrow,.plan-name,.plan-price{grid-column:1}.benefit-list{grid-column:2;grid-row:1 / span 3;align-self:end;margin-bottom:18px}.plan-panel .btn{grid-column:2;justify-self:start;width:auto;min-width:230px}.plan-caption{grid-column:2}.faq-layout{grid-template-columns:.8fr 1.2fr;gap:60px}.booking-layout{grid-template-columns:1fr .78fr;align-items:center;gap:60px}.booking-form{padding:28px}.location-layout{grid-template-columns:1fr 1fr;align-items:center;gap:44px}.map-frame{height:360px}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}footer{padding-bottom:24px}.mobile-bottom{display:none}}
+    @media(min-width:1000px){.gallery-track{grid-template-columns:1.05fr .8fr 1.05fr .9fr;gap:14px}.gallery-item{height:370px}.gallery-item:nth-child(2){height:305px;margin-top:64px}.gallery-item:nth-child(4){height:325px;margin-top:35px}.schedule-list{column-gap:66px}.plan-tabs button{min-width:160px}.booking-layout{gap:90px}}
+  </style>
+</head>
+<body>
+  <div class="intro-mark" aria-hidden="true"><span>RANDORI <b>BJJ</b></span></div>
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="Randori BJJ, inicio"><img src="logorandori.jpeg" alt="Logo de Randori BJJ"><span class="brand-word">Randori<small>Brazilian Jiu-Jitsu</small></span></a>
+      <div class="nav-links"><a href="#horarios">Horarios</a><a href="#planes">Planes</a><a href="#ubicacion">Ubicación</a></div>
+      <a class="btn" href="#reserva">Clase Gratis <span class="arrow">↗</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <div class="eyebrow">Randori BJJ · Jiu-Jitsu Brasileño</div>
+        <h1 class="display">Entrena con propósito.<br><em>Evoluciona</em> en el tatami.</h1>
+        <p class="copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Encuentra tu lugar, aprende a tu ritmo y da el primer paso hoy.</p>
+        <div class="hero-actions"><a class="btn" href="#reserva">Agendar clase de prueba gratis <span class="arrow">↗</span></a><a class="btn btn-secondary" href="#horarios">Ver horarios</a></div>
+        <div class="quick-links"><a href="https://wa.me/?text=Hola%20Randori%20BJJ%2C%20quiero%20agendar%20una%20clase%20de%20prueba." target="_blank" rel="noopener">WhatsApp <span class="dot">↗</span></a><span class="dot">/</span><a href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram <span class="dot">↗</span></a></div>
+      </div>
+    </section>
+    <section class="proof-strip" aria-label="Mensaje de bienvenida"><div class="wrap proof-inner"><span class="proof-symbol" aria-hidden="true">R</span><p>Parte desde cero. <span>Entrena acompañado desde el primer día.</span></p></div></section>
+    <section class="gallery-section" id="comunidad">
+      <div class="wrap">
+        <div class="gallery-head"><div><div class="eyebrow">La vida en el tatami</div><h2 class="section-title">Entrena. Aprende.<br>Vuelve más fuerte.</h2></div><p class="copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cada clase suma una nueva experiencia.</p></div>
+        <div class="gallery-track" aria-label="Galería de la academia">
+          <article class="gallery-item"><span class="placeholder-label">[IMG: Tatami · 800 × 600]</span><span class="abstract" aria-hidden="true">01</span><strong>El espacio</strong></article>
+          <article class="gallery-item"><span class="placeholder-label">[IMG: Técnica · 800 × 600]</span><span class="abstract" aria-hidden="true">02</span><strong>La técnica</strong></article>
+          <article class="gallery-item"><span class="placeholder-label">[IMG: Comunidad · 800 × 600]</span><span class="abstract" aria-hidden="true">03</span><strong>El equipo</strong></article>
+          <article class="gallery-item"><span class="placeholder-label">[IMG: Entrenamiento · 800 × 600]</span><span class="abstract" aria-hidden="true">04</span><strong>Tu progreso</strong></article>
+        </div>
+      </div>
+    </section>
+    <section class="schedule-section" id="horarios">
+      <div class="wrap">
+        <div class="section-heading"><div class="eyebrow">Encuentra tu clase</div><h2 class="section-title">Horarios</h2><p class="copy">Elige una modalidad para revisar una referencia de clases. Confirma los horarios vigentes por WhatsApp.</p></div>
+        <div class="schedule-tabs" role="tablist" aria-label="Filtrar horarios">
+          <button type="button" role="tab" aria-selected="true" data-schedule="principiantes">Principiantes</button><button type="button" role="tab" aria-selected="false" data-schedule="avanzados">Avanzados</button><button type="button" role="tab" aria-selected="false" data-schedule="kids">Niños</button><button type="button" role="tab" aria-selected="false" data-schedule="nogi">No-Gi</button>
+        </div>
+        <div class="schedule-list" id="schedule-list" aria-live="polite"></div>
+        <p class="schedule-note">* Horarios de referencia para la maqueta. Confirmar días y disponibilidad con Randori BJJ.</p>
+      </div>
+    </section>
+    <section class="pricing-section" id="planes">
+      <div class="wrap">
+        <div class="section-heading"><div class="eyebrow">Tu camino, a tu ritmo</div><h2 class="section-title">Planes</h2><p class="copy">Misma base de entrenamiento. Elige la duración que mejor acompaña tus objetivos.</p></div>
+        <div class="plan-tabs" role="tablist" aria-label="Duración del plan">
+          <button type="button" role="tab" aria-selected="true" data-plan="Mensual">Mensual</button><button type="button" role="tab" aria-selected="false" data-plan="Trimestral">Trimestral</button><button type="button" role="tab" aria-selected="false" data-plan="Semestral">Semestral</button><button type="button" role="tab" aria-selected="false" data-plan="Anual">Anual</button>
+        </div>
+        <article class="plan-panel" aria-live="polite"><span class="popular-tag" id="popular-tag" hidden>Más popular · Mayor ahorro</span><div class="eyebrow">Membresía Randori</div><h3 class="plan-name" id="plan-name">Mensual</h3><p class="plan-price"><strong id="plan-price">Consultar valor</strong>El equipo te orienta según modalidad y disponibilidad.</p><ul class="benefit-list"><li><span class="check">✓</span> Clases de Brazilian Jiu-Jitsu</li><li><span class="check">✓</span> Orientación para comenzar desde cero</li><li><span class="check">✓</span> Modalidad Gi / No-Gi según horarios vigentes</li><li><span class="check">✓</span> Acompañamiento dentro de la academia</li></ul><a class="btn btn-dark" id="plan-cta" href="#reserva">Consultar este plan <span class="arrow">↗</span></a><p class="plan-caption">Valores, frecuencia y condiciones: consultar directamente con la academia.</p></article>
+      </div>
+    </section>
+    <section class="faq-section" id="preguntas">
+      <div class="wrap faq-layout">
+        <div><div class="eyebrow">Antes de tu primera clase</div><h2 class="section-title">Preguntas<br>frecuentes</h2><p class="copy">¿Tienes otra duda? Escríbenos y te ayudamos a dar el primer paso.</p><a class="btn btn-dark" href="https://wa.me/?text=Hola%20Randori%20BJJ%2C%20tengo%20una%20consulta." target="_blank" rel="noopener">Preguntar por WhatsApp <span class="arrow">↗</span></a></div>
+        <div class="faq-list">
+          <details><summary>¿Necesito experiencia previa?</summary><p>Lorem ipsum dolor sit amet. No necesitas experiencia: la clase de prueba te permite conocer el espacio y conversar con el equipo sobre cómo empezar.</p></details>
+          <details><summary>¿Qué debo llevar a mi primera clase?</summary><p>Ven con ropa deportiva cómoda, agua y ganas de aprender. Si tienes dudas sobre el uniforme o equipamiento, consúltanos antes de asistir.</p></details>
+          <details><summary>¿Puedo probar antes de elegir un plan?</summary><p>Sí. Agenda una clase de prueba gratis para conocer la academia, la dinámica y resolver tus preguntas antes de decidir.</p></details>
+          <details><summary>¿Hay clases para principiantes?</summary><p>La academia recibe a personas que están comenzando. Selecciona “Principiantes” en horarios y confirma la disponibilidad del día.</p></details>
+          <details><summary>¿Desde qué edad se puede entrenar?</summary><p>Consulta por WhatsApp los grupos disponibles y las edades correspondientes antes de reservar una clase para niños.</p></details>
+        </div>
+      </div>
+    </section>
+    <section class="booking-section" id="reserva">
+      <div class="wrap booking-layout">
+        <div><div class="eyebrow">Tu primera clase es gratis</div><h2 class="display">Da el primer paso.</h2><p class="copy">Déjanos tus datos y prepara un mensaje para coordinar tu clase de prueba por WhatsApp.</p></div>
+        <form class="booking-form" id="booking-form">
+          <div class="field"><label for="name">Tu nombre</label><input id="name" name="name" autocomplete="name" placeholder="¿Cómo te llamas?" required></div>
+          <div class="field"><label for="level">¿Has entrenado antes?</label><select id="level" name="level"><option value="Estoy empezando">Estoy empezando</option><option value="Ya tengo experiencia">Ya tengo experiencia</option><option value="Consulta para niños">Consulta para niños</option></select></div>
+          <div class="field"><label for="time">¿Cuándo te gustaría venir?</label><select id="time" name="time"><option value="Quiero revisar horarios">Quiero revisar horarios</option><option value="Mañana">Mañana</option><option value="Esta semana">Esta semana</option><option value="La próxima semana">La próxima semana</option></select></div>
+          <input type="hidden" id="selected-plan" name="plan" value="Clase de prueba gratis">
+          <button class="btn" type="submit">Continuar por WhatsApp <span class="arrow">↗</span></button>
+          <p class="form-note">Se abrirá WhatsApp con tu mensaje listo para enviar. No almacenamos tus datos.</p><p class="form-status" id="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+    <section class="location-section" id="ubicacion">
+      <div class="wrap location-layout">
+        <div class="location-copy"><div class="eyebrow">Ven a conocernos</div><h2 class="section-title">Nos vemos<br>en el tatami.</h2><p class="copy">Encuentra la academia, confirma la dirección y coordina tu visita con el equipo.</p><div class="address-block"><span class="address-pin" aria-hidden="true">⌖</span><div><strong>Randori BJJ</strong><span>Dirección por confirmar · Chile</span></div></div><div class="location-actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Randori+BJJ+Chile" target="_blank" rel="noopener">Abrir en Google Maps <span class="arrow">↗</span></a><a class="btn btn-secondary" href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram <span class="arrow">↗</span></a></div></div>
+        <div class="map-wrap"><span class="map-label">[MAPA: confirmar dirección exacta]</span><iframe class="map-frame" title="Búsqueda de Randori BJJ en Google Maps" loading="lazy" src="https://www.google.com/maps?q=Randori%20BJJ%20Chile&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap footer-inner"><a href="#inicio" class="footer-brand"><img src="logorandori.jpeg" alt=""><span>Randori BJJ</span></a><div class="footer-links"><a href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/?text=Hola%20Randori%20BJJ" target="_blank" rel="noopener">WhatsApp</a><a href="#preguntas">Preguntas frecuentes</a></div><span>© <span id="year"></span> Randori BJJ · Jiu-Jitsu Brasileño</span></div></footer>
+  <div class="mobile-bottom"><a class="btn" href="#reserva">Agendar clase gratis <span class="arrow">↗</span></a></div>
+  <script>
+    // Respaldo: el overlay de entrada se elimina aunque falle la carga del visor 3D.
+    (function(){const intro=document.querySelector('.intro-mark');if(!intro)return;const rm=()=>intro.remove();intro.addEventListener('animationend',e=>{if(e.target===intro)rm()});setTimeout(rm,1800)})();
+  </script>
+  <script src="vendor/three/three.min.js"></script>
+  <script src="vendor/three/fflate.min.js"></script>
+  <script src="vendor/three/FBXLoader.js"></script>
+  <script src="vendor/three/OrbitControls.js"></script>
+  <script src="assets/belt-model-data.js"></script>
+  <script src="scripts/belt-viewer.js"></script>
+  <script>
+    const schedules={
+      principiantes:[['Lunes','GI · Nivel inicial','18:30 – 19:30'],['Miércoles','GI · Nivel inicial','18:30 – 19:30'],['Sábado','Fundamentos','10:00 – 11:00']],
+      avanzados:[['Martes','GI · Entrenamiento','19:30 – 21:00'],['Jueves','GI · Entrenamiento','19:30 – 21:00'],['Sábado','Open mat','11:00 – 12:30']],
+      kids:[['Martes','BJJ · Niños','17:30 – 18:15'],['Jueves','BJJ · Niños','17:30 – 18:15'],['Sábado','BJJ · Niños','09:00 – 09:45']],
+      nogi:[['Lunes','No-Gi · Técnica','19:30 – 20:30'],['Miércoles','No-Gi · Sparring','19:30 – 20:30'],['Viernes','No-Gi · Todos los niveles','18:30 – 19:30']]
+    };
+    const scheduleList=document.getElementById('schedule-list');
+    function renderSchedule(key){scheduleList.innerHTML=schedules[key].map(([day,name,time])=>`<article class="schedule-row"><div class="schedule-day">${day}<small>${time}</small></div><div class="schedule-info"><strong>${name}</strong><span>Horario referencial · confirmar disponibilidad</span></div></article>`).join('')}
+    renderSchedule('principiantes');
+    document.querySelectorAll('[data-schedule]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-schedule]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));renderSchedule(button.dataset.schedule)}));
+    const planPrice=document.getElementById('plan-price'),planName=document.getElementById('plan-name'),popularTag=document.getElementById('popular-tag'),planCta=document.getElementById('plan-cta'),selectedPlan=document.getElementById('selected-plan');
+    document.querySelectorAll('[data-plan]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-plan]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));const plan=button.dataset.plan;planName.textContent=plan;planPrice.textContent='Consultar valor';popularTag.hidden=plan!=='Semestral';selectedPlan.value=`Plan ${plan}`;planCta.textContent=`Consultar plan ${plan} ↗`;planCta.href='#reserva'}));
+    document.getElementById('booking-form').addEventListener('submit',event=>{event.preventDefault();const form=new FormData(event.currentTarget);const name=String(form.get('name')||'').trim();if(!name){document.getElementById('form-status').textContent='Escribe tu nombre para preparar el mensaje.';return}const message=`Hola Randori BJJ, soy ${name}. Quiero coordinar: ${form.get('plan')}. Nivel: ${form.get('level')}. Preferencia: ${form.get('time')}. ¿Me ayudan con los horarios disponibles?`;document.getElementById('form-status').textContent='Abriendo WhatsApp para que envíes tu solicitud…';window.open(`https://wa.me/?text=${encodeURIComponent(message)}`,'_blank','noopener,noreferrer')});
+    document.getElementById('year').textContent=new Date().getFullYear();
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.gallery-item,.schedule-section,.pricing-section,.faq-section,.booking-layout,.location-layout').forEach(el=>{el.classList.add('reveal');observer.observe(el)});
+  </script>
+</body>
+</html>

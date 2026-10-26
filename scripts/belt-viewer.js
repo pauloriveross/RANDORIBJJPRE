@@ -86,9 +86,14 @@
   controls.target.set(0, 0, 0);
 
   // En móvil/tablet el scroll vertical de la página debe seguir funcionando (el zoom por gesto queda desactivado).
-  const applyInputMode = () => { controls.enableZoom = !isCompact(); };
-  applyInputMode();
-
+  let touchMode = false;
+const applyInputMode = () => {
+  touchMode = isCompact() || mqCoarse.matches;
+  controls.enabled = !touchMode;        // en táctil, OrbitControls queda apagado
+  controls.enableZoom = !touchMode;
+  canvas.style.touchAction = touchMode ? 'pan-y' : 'none';
+};
+applyInputMode();
   // ---------- Encuadre responsivo ----------
   // El modelo se normaliza a una esfera de radio 1; la cámara se aleja lo justo según el aspecto del canvas.
   const SPHERE_MARGIN = 1.28;
@@ -192,6 +197,22 @@
 
   controls.addEventListener('start', () => { dragging = true; start(); });
   controls.addEventListener('end', () => { dragging = false; });
+  // Arrastre horizontal para pantallas táctiles (el scroll vertical queda libre)
+let dragX = null;
+canvas.addEventListener('pointerdown', (e) => {
+  if (!touchMode || e.pointerType === 'mouse') return;
+  dragX = e.clientX;
+  dragging = true;
+  start();
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (dragX === null || !modelPivot) return;
+  modelPivot.rotation.y += (e.clientX - dragX) * 0.012;
+  dragX = e.clientX;
+  requestRender();
+});
+const endDrag = () => { dragX = null; dragging = false; };
+['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => canvas.addEventListener(ev, endDrag));
   controls.addEventListener('change', requestRender);
 
   if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);

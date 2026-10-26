@@ -8,7 +8,6 @@
   <title>Randori BJJ — Tu primera clase empieza aquí</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="assets/Meshy_AI_Black_Belt_Resolve_1025162705_texture.fbx.glb" as="fetch" type="model/gltf-binary" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{--black:#0d0d0d;--panel:#171717;--panel2:#202020;--white:#fff;--paper:#f4f4f2;--ink:#111;--muted:#a8a8a8;--line:#393939;--red:#d6001c;--red-dark:#ae0017;--max:1200px;--display:'Barlow Condensed',Impact,sans-serif;--body:'Manrope',Arial,sans-serif}
@@ -179,9 +178,9 @@
     // Respaldo: el overlay de entrada se elimina aunque falle la carga del visor 3D.
     (function(){const intro=document.querySelector('.intro-mark');if(!intro)return;const rm=()=>intro.remove();intro.addEventListener('animationend',e=>{if(e.target===intro)rm()});setTimeout(rm,1800)})();
   </script>
-  <script defer src="vendor/three/three.min.js"></script>
-  <script defer src="vendor/three/GLTFLoader.js"></script>
-  <script defer src="vendor/three/OrbitControls.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script defer src="scripts/belt-viewer.js"></script>
   <script>
     const scheduleData=[

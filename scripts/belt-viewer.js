@@ -8,11 +8,19 @@
   }
 
   const host = document.getElementById('inicio');
-  if (!host || !window.THREE || !window.RANDORI_BELT_GZIP) return;
+  if (!host || !window.THREE || !THREE.GLTFLoader || !THREE.OrbitControls) return;
+
+  const MODEL_URL = host.dataset.model || 'assets/Meshy_AI_Black_Belt_Resolve_1025162705_texture.fbx.glb';
+
+  const mqCompact = window.matchMedia('(max-width:999px)');   // móvil + tablet
+  const mqCoarse = window.matchMedia('(pointer:coarse)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const isCompact = () => mqCompact.matches;
 
   const fail = () => {
     host.dataset.modelState = 'error';
     host.removeAttribute('aria-busy');
+    if (host.querySelector('.belt-error')) return;
     const note = document.createElement('p');
     note.className = 'belt-error';
     note.setAttribute('role', 'alert');
@@ -20,13 +28,31 @@
     host.appendChild(note);
   };
 
+  // ---------- Renderer ----------
+  // En pantallas pequeñas/táctiles: sin MSAA (el costo es alto y el DPR ya suaviza) y GPU por defecto (batería).
+  const lowPower = mqCoarse.matches || isCompact();
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
+    renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: !lowPower,
+      powerPreference: lowPower ? 'default' : 'high-performance',
+      stencil: false,
+      depth: true,
+    });
   } catch (error) {
     fail();
     return;
   }
+
+  const maxDpr = lowPower ? 1.5 : 2;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
+  renderer.setClearColor(0x000000, 0);
+  if ('outputColorSpace' in renderer && THREE.SRGBColorSpace) renderer.outputColorSpace = THREE.SRGBColorSpace;
+  else renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  renderer.shadowMap.enabled = false;
 
   const canvas = renderer.domElement;
   canvas.className = 'hero-canvas';
@@ -37,23 +63,18 @@
   host.dataset.modelState = 'loading';
   host.setAttribute('aria-busy', 'true');
 
+  // ---------- Escena ----------
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
-  camera.position.set(0, 0, 5.2);
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 40);
+  camera.position.set(0, 0, 5);
 
-  // Even lighting tuned so a black cotton belt still reads against the black page.
-  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x555555, 0.55);
-  scene.add(hemi);
-  const key = new THREE.DirectionalLight(0xffffff, 1.2);
+  // Tres luces bastan: un cinturón negro sobre fondo negro se lee gracias al rim light.
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x555555, 1.0));
+  const key = new THREE.DirectionalLight(0xffffff, 1.3);
   key.position.set(2.6, 2.2, 5.5);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0xffffff, 0.55);
-  fill.position.set(-4, 0.6, 3);
-  scene.add(fill);
-  // A black belt on a black stage only reads through its rim light.
-  const rim = new THREE.DirectionalLight(0xffffff, 0.9);
-  rim.position.set(0, -3, -4);
+  const rim = new THREE.DirectionalLight(0xffffff, 1.0);
+  rim.position.set(-2, -3, -4);
   scene.add(rim);
 
   const controls = new THREE.OrbitControls(camera, canvas);
@@ -62,133 +83,192 @@
   controls.enablePan = false;
   controls.rotateSpeed = 0.7;
   controls.zoomSpeed = 0.7;
-  controls.minDistance = 2.4;
-  controls.maxDistance = 9;
   controls.target.set(0, 0, 0);
 
-  // En mobile/tablet el scroll vertical de la página debe seguir funcionando.
-  if (window.matchMedia('(max-width:999px)').matches) {
-    controls.enableZoom = false;
-    canvas.style.touchAction = 'pan-y';
-  }
+  // En móvil/tablet el scroll vertical de la página debe seguir funcionando (el zoom por gesto queda desactivado).
+  const applyInputMode = () => { controls.enableZoom = !isCompact(); };
+  applyInputMode();
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
-  renderer.setClearColor(0x000000, 0);
-  renderer.outputEncoding = THREE.sRGBEncoding;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  // ---------- Encuadre responsivo ----------
+  // El modelo se normaliza a una esfera de radio 1; la cámara se aleja lo justo según el aspecto del canvas.
+  const SPHERE_MARGIN = 1.28;
+  let fitDistance = 5;
+  let userZoomed = false;
+  canvas.addEventListener('wheel', () => { userZoomed = true; }, { passive: true });
 
-  let modelPivot = null;
-  let visible = true;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const clock = new THREE.Clock();
+  const updateFit = () => {
+    const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
+    const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
+    fitDistance = (1 / Math.sin(Math.min(vHalf, hHalf))) * SPHERE_MARGIN * (isCompact() ? 0.92 : 1);
+    controls.minDistance = fitDistance * 0.5;
+    controls.maxDistance = fitDistance * 1.8;
+    if (!userZoomed) {
+      const dir = camera.position.clone().sub(controls.target);
+      if (dir.lengthSq() === 0) dir.set(0, 0, 1);
+      camera.position.copy(controls.target).add(dir.setLength(fitDistance));
+    }
+  };
 
-  // El renderer se ajusta al tamaño del canvas (su propia columna/bloque), no al hero completo.
+  // ---------- Tamaño ----------
+  let lastW = 0, lastH = 0, lastDpr = 0;
   const resize = () => {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
-    if (!width || !height) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+    if (!width || !height || (width === lastW && height === lastH && dpr === lastDpr)) return;
+    lastW = width; lastH = height; lastDpr = dpr;
+    renderer.setPixelRatio(dpr);
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    updateFit();
+    requestRender();
   };
+
+  // ---------- Bucle de render (se detiene cuando no se ve) ----------
+  let modelPivot = null;
+  let running = false;
+  let rafId = 0;
+  let inView = true;
+  let dragging = false;
+  let spin = 0;
+  let readyAt = null;
+  let lastFrame = 0;
+  let renderQueued = false;
+  const clock = new THREE.Clock(false);
+  const MIN_FRAME_MS = lowPower ? 1000 / 45 : 0;   // tope de 45 fps en táctil
+
+  const shouldAnimate = () => !!modelPivot && inView && !document.hidden;
+
+  const tick = (now) => {
+    rafId = 0;
+    if (!running) return;
+    rafId = requestAnimationFrame(tick);
+    if (MIN_FRAME_MS && now - lastFrame < MIN_FRAME_MS) return;
+    lastFrame = now;
+
+    const delta = Math.min(clock.getDelta(), 0.05);
+    const t = clock.elapsedTime;
+
+    if (modelPivot) {
+      const targetSpin = (reduceMotion.matches || dragging) ? 0 : 0.3;
+      spin += (targetSpin - spin) * Math.min(delta * 3, 1);
+      modelPivot.rotation.y += delta * spin;
+      if (!reduceMotion.matches) modelPivot.position.y = Math.sin(t * 0.9) * 0.04;
+
+      if (readyAt === null) readyAt = t;
+      const p = Math.min((t - readyAt) / 1.2, 1);
+      if (p < 1) modelPivot.scale.setScalar(0.85 + 0.15 * (1 - Math.pow(1 - p, 3)));
+      else if (modelPivot.scale.x !== 1) modelPivot.scale.setScalar(1);
+    }
+
+    controls.update();
+    renderer.render(scene, camera);
+
+    // Con movimiento reducido y sin interacción pendiente no hace falta seguir dibujando.
+    if (reduceMotion.matches && !dragging && readyAt !== null && (t - readyAt) > 1.3 && Math.abs(spin) < 1e-3) stop();
+  };
+
+  const start = () => {
+    if (running || !shouldAnimate()) return;
+    running = true;
+    clock.start();
+    lastFrame = 0;
+    rafId = requestAnimationFrame(tick);
+  };
+  const stop = () => {
+    running = false;
+    if (clock.running) clock.stop();
+    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+  };
+  const sync = () => { if (shouldAnimate()) start(); else stop(); };
+
+  // Render puntual (resize, cambios de controles) cuando el bucle está detenido.
+  function requestRender() {
+    if (running || !modelPivot || renderQueued) return;
+    renderQueued = true;
+    requestAnimationFrame(() => { renderQueued = false; controls.update(); renderer.render(scene, camera); });
+  }
+
+  controls.addEventListener('start', () => { dragging = true; start(); });
+  controls.addEventListener('end', () => { dragging = false; });
+  controls.addEventListener('change', requestRender);
 
   if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
   else window.addEventListener('resize', resize, { passive: true });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; sync(); }, { rootMargin: '80px' }).observe(host);
+  }
+  document.addEventListener('visibilitychange', sync);
+  const onMq = () => { applyInputMode(); updateFit(); requestRender(); };
+  (mqCompact.addEventListener ? mqCompact.addEventListener.bind(mqCompact, 'change') : mqCompact.addListener.bind(mqCompact))(onMq);
+  (reduceMotion.addEventListener ? reduceMotion.addEventListener.bind(reduceMotion, 'change') : reduceMotion.addListener.bind(reduceMotion))(sync);
   resize();
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(host);
-  }
+  // Pérdida de contexto WebGL (común en móviles al cambiar de app).
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); stop(); }, false);
+  canvas.addEventListener('webglcontextrestored', () => { sync(); requestRender(); }, false);
 
-  let dragging = false;
-let spin = 0;
-let readyAt = null;
-controls.addEventListener('start', () => { dragging = true; });
-controls.addEventListener('end', () => { dragging = false; });
-
-const animationFrame = () => {
-  requestAnimationFrame(animationFrame);
-  if (!visible || document.hidden) return;
-  const delta = Math.min(clock.getDelta(), 0.05);
-  const t = clock.elapsedTime;
-
-  if (modelPivot) {
-    const targetSpin = (reduceMotion.matches || dragging) ? 0 : 0.3;
-    spin += (targetSpin - spin) * Math.min(delta * 3, 1);
-    modelPivot.rotation.y += delta * spin;
-
-    if (!reduceMotion.matches) modelPivot.position.y = Math.sin(t * 0.9) * 0.04;
-
-    if (readyAt === null) readyAt = t;
-    const p = Math.min((t - readyAt) / 1.2, 1);
-    const ease = 1 - Math.pow(1 - p, 3);
-    modelPivot.scale.setScalar(0.85 + 0.15 * ease);
-  }
-
-  controls.update();
-  renderer.render(scene, camera);
-};
-animationFrame();
-
-  const decodeFbx = async () => {
-    if (!('DecompressionStream' in window)) throw new Error('Este navegador no admite la carga comprimida del modelo.');
-    const binary = atob(window.RANDORI_BELT_GZIP);
-    const compressed = Uint8Array.from(binary, character => character.charCodeAt(0));
-    const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
-    return new Response(stream).arrayBuffer();
+  // ---------- Carga del modelo GLB ----------
+  const prepareMaterial = (mat, maxAniso) => {
+    if (!mat) return;
+    // GLTFLoader ya entrega MeshStandardMaterial: se ajusta en sitio, sin recrear materiales.
+    mat.roughness = 1;
+    mat.metalness = 0;
+    if (mat.emissive) mat.emissive.setHex(0x000000);
+    if (mat.normalMap && mat.normalScale) mat.normalScale.set(1.2, 1.2);   // realza la trama de la tela
+    ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap'].forEach((k) => {
+      const tex = mat[k];
+      if (tex) tex.anisotropy = maxAniso;
+    });
+    mat.needsUpdate = true;
   };
 
-  decodeFbx().then((fbxBytes) => {
-    const modelPath = new URL('Meshy_AI_Black_Belt_Resolve_1025162705_texture_fbx/', document.baseURI).href;
-    const model = new THREE.FBXLoader().parse(fbxBytes, modelPath);
+  const onLoaded = (gltf) => {
+    const model = gltf.scene;
     const bounds = new THREE.Box3().setFromObject(model);
-    const size = bounds.getSize(new THREE.Vector3());
-    const center = bounds.getCenter(new THREE.Vector3());
-    const maxDimension = Math.max(size.x, size.y, size.z);
-    if (!Number.isFinite(maxDimension) || maxDimension === 0) throw new Error('El modelo no contiene geometría visible.');
+    const sphere = bounds.getBoundingSphere(new THREE.Sphere());
+    if (!Number.isFinite(sphere.radius) || sphere.radius === 0) throw new Error('El modelo no contiene geometría visible.');
 
-    // Escala según la proporción del canvas, no de la ventana.
-    const aspect = canvas.clientWidth / Math.max(canvas.clientHeight, 1);
-    const isMobile = window.matchMedia('(max-width:999px)').matches;
-const fitScale = (2.4 * (isMobile ? 0.95 : (aspect > 1.05 ? 0.75 : 0.7))) / maxDimension;
-    model.scale.setScalar(fitScale);
-    model.position.set(-center.x * fitScale, -center.y * fitScale, -center.z * fitScale);
+    // Normaliza a radio 1 y centra en el origen.
+    const s = 1 / sphere.radius;
+    model.scale.setScalar(s);
+    model.position.copy(sphere.center).multiplyScalar(-s);
+
+    const maxAniso = Math.min(lowPower ? 4 : 8, renderer.capabilities.getMaxAnisotropy());
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = node.receiveShadow = false;
+      node.matrixAutoUpdate = false;
+      node.updateMatrix();
+      if (node.geometry && !node.geometry.boundingSphere) node.geometry.computeBoundingSphere();
+      (Array.isArray(node.material) ? node.material : [node.material]).forEach((m) => prepareMaterial(m, maxAniso));
+    });
+
     modelPivot = new THREE.Group();
-    // Slightly tilted so the flat belt shows its form instead of an edge-on sliver.
+    // Ligera inclinación para que el cinturón plano muestre su forma y no un canto.
     modelPivot.rotation.set(-0.06, 0, -0.09);
+    modelPivot.scale.setScalar(0.85);
     modelPivot.add(model);
     scene.add(modelPivot);
 
-    // Matte fabric: keep the loader's material but kill the plastic specular highlight.
-    model.traverse((node) => {
-  if (!node.isMesh) return;
-  const convert = (old) => {
-    if (!old) return old;
-    const mat = new THREE.MeshStandardMaterial({
-      map: old.map || null,
-      normalMap: old.normalMap || null,
-      color: old.color ? old.color.clone() : new THREE.Color(0xffffff),
-      roughness: 1,
-      metalness: 0,
-      side: old.side,
-    });
-    if (mat.normalMap) mat.normalScale.set(1.2, 1.2);   // realza la trama de la tela
-    mat.emissive.setHex(0x000000);                        // evita que el negro quede "muerto"
-    old.dispose();
-    return mat;
-  };
-  node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material);
-});
-
-    controls.target.set(0, 0, 0);
-    controls.update();
     resize();
+    updateFit();
+    controls.update();
+    // Sube el modelo a la GPU una vez, antes del primer frame visible (evita tirón al animar).
+    renderer.compile(scene, camera);
+    renderer.render(scene, camera);
+
     host.dataset.modelState = 'ready';
     host.removeAttribute('aria-busy');
     window.RANDORI_BELT_VIEWER = { scene, camera, controls, model: modelPivot, renderer };
-  }).catch((error) => {
-    console.error('Randori 3D belt viewer:', error);
-    fail();
-  });
+    sync();
+  };
+
+  new THREE.GLTFLoader().load(
+    MODEL_URL,
+    (gltf) => { try { onLoaded(gltf); } catch (error) { console.error('Randori 3D belt viewer:', error); fail(); } },
+    undefined,
+    (error) => { console.error('Randori 3D belt viewer:', error); fail(); }
+  );
 })();

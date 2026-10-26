@@ -8,6 +8,7 @@
   <title>Randori BJJ — Tu primera clase empieza aquí</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="assets/Meshy_AI_Black_Belt_Resolve_1025162705_texture.fbx.glb" as="fetch" type="model/gltf-binary" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{--black:#0d0d0d;--panel:#171717;--panel2:#202020;--white:#fff;--paper:#f4f4f2;--ink:#111;--muted:#a8a8a8;--line:#393939;--red:#d6001c;--red-dark:#ae0017;--max:1200px;--display:'Barlow Condensed',Impact,sans-serif;--body:'Manrope',Arial,sans-serif}
@@ -28,7 +29,49 @@
     .hero-canvas:active{cursor:grabbing}
     .hero h1{font-size:clamp(38px,9vw,54px);margin:14px 0 16px;max-width:12ch}.hero h1 em{font-style:normal;color:var(--red)}.hero-copy .copy{font-size:14px;max-width:46ch;margin:0 0 22px}.hero-actions{display:flex;flex-wrap:wrap;gap:10px}.quick-links{display:flex;align-items:center;gap:17px;margin-top:19px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.quick-links a{color:#b6b6b6;display:flex;align-items:center;gap:6px}.quick-links a:hover{color:white}.quick-links .dot{color:var(--red)}
     .belt-error{position:absolute;z-index:3;left:14px;bottom:14px;margin:0;padding:9px 12px;background:#0d0d0d;border-left:3px solid var(--red);color:#ffd7dc;font-size:11px;max-width:min(360px,calc(100% - 28px))}
-    @media(max-width:699px){.hero-copy .copy,.hero-copy .quick-links{display:none}}
+    .hero-canvas{touch-action:pan-y}
+    @media(min-width:1000px){.hero-canvas{touch-action:none}}
+    /* ===== MÓVIL (<700px) ===== */
+    @media(max-width:699px){
+      html{scroll-padding-top:70px}
+      body{overflow-x:clip}
+      .site-header{height:64px}
+      .nav{gap:10px}
+      .brand{gap:9px;min-width:0}
+      .brand img{width:40px;height:40px}
+      .brand-word{font-size:19px}
+      .brand-word small{display:none}
+      .nav .btn{min-height:40px;padding:0 12px}
+      .hero-copy .copy,.hero-copy .quick-links{display:none}
+      .hero-copy{padding:26px 0 8px}
+      .hero h1{max-width:none;margin:12px 0 18px}
+      .hero-actions{flex-direction:column;gap:9px}
+      .hero-actions .btn{width:100%}
+      .hero-canvas{height:min(88vw,340px);min-height:230px}
+      .gallery-head{flex-direction:column;align-items:flex-start;gap:14px}
+      .gallery-head .copy{max-width:none}
+      .gallery-track{margin-inline:-20px;padding:0 20px 12px;scroll-padding-inline:20px;-webkit-overflow-scrolling:touch}
+      .gallery-item .abstract{font-size:96px}
+      .schedule-row{grid-template-columns:minmax(96px,.55fr) 1fr}
+      .plan-name{font-size:40px}
+      .plan-panel .btn{min-height:50px}
+      .booking-section h2{max-width:none}
+      .field input,.field select{font-size:16px;min-height:48px}
+      .map-frame{height:240px}
+      .location-actions .btn{flex:1 1 100%}
+    }
+    /* Teléfonos pequeños (<=380px) */
+    @media(max-width:380px){
+      .wrap{width:calc(100% - 32px)}
+      .brand-word{font-size:17px}
+      .nav .btn{padding:0 10px;font-size:9px;letter-spacing:.04em}
+      .section-title{font-size:clamp(38px,12vw,46px)}
+      .plan-panel{padding:20px 16px}
+      .booking-form{padding:16px}
+      .gallery-track{margin-inline:-16px;padding-inline:16px}
+    }
+    /* Tablet y móvil: sin hover pegajoso en pantallas táctiles */
+    @media(hover:none){.btn:hover{transform:none}}
     @media(min-width:700px){
       .hero-copy{width:calc(100% - 64px);padding:44px 0 22px}
       .hero h1{font-size:clamp(56px,6.8vw,88px);max-width:13ch}
@@ -53,7 +96,7 @@
     .location-section{padding:70px 0 66px;background:#111}.location-layout{display:grid;gap:20px}.location-copy .copy{font-size:13px}.map-frame{height:270px;width:100%;border:0;filter:grayscale(1) contrast(1.05);background:#242424}.map-wrap{position:relative;overflow:hidden;border:1px solid #3b3b3b}.map-label{position:absolute;left:11px;top:11px;z-index:1;background:#0d0d0d;padding:6px 8px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.address-block{display:flex;align-items:flex-start;gap:12px;margin:17px 0 21px}.address-pin{color:var(--red);font-size:20px}.address-block strong{display:block;font-size:13px}.address-block span{display:block;color:#aaa;font-size:11px}.location-actions{display:flex;flex-wrap:wrap;gap:9px}.location-actions .btn{min-height:46px;padding:0 14px;font-size:10px}
     footer{background:#070707;border-top:1px solid #272727;padding:23px 0 78px;color:#999;font-size:10px}.footer-inner{display:flex;flex-direction:column;gap:14px}.footer-brand{display:flex;align-items:center;gap:8px;color:#fff;font:700 16px var(--display);text-transform:uppercase}.footer-brand img{width:28px;height:28px;object-fit:contain;background:#fff;border-radius:50%}.footer-links{display:flex;flex-wrap:wrap;gap:15px}.footer-links a:hover{color:#fff}.mobile-bottom{position:fixed;z-index:49;left:0;right:0;bottom:0;padding:9px 14px calc(9px + env(safe-area-inset-bottom));background:rgba(13,13,13,.96);border-top:1px solid #343434;display:flex;justify-content:center}.mobile-bottom .btn{width:min(100%,500px);min-height:46px}
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}.reveal.visible{opacity:1;transform:none}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
-    @media(min-width:700px){.wrap{width:min(var(--max),calc(100% - 64px))}.nav-links{display:flex}.gallery-section,.schedule-section,.pricing-section,.faq-section,.location-section{padding-top:96px;padding-bottom:100px}.gallery-track{grid-auto-columns:1fr;grid-auto-flow:initial;overflow:visible;align-items:start}.gallery-item{height:340px}.gallery-item:nth-child(2){height:280px;margin-top:45px}.gallery-item:nth-child(4){height:300px;margin-top:28px}.gallery-item strong{font-size:34px}.schedule-list{grid-template-columns:1fr 1fr;column-gap:34px}.schedule-row{grid-template-columns:100px 1fr}.plan-panel{padding:34px 36px;max-width:none;margin-top:28px;display:grid;grid-template-columns:.86fr 1.14fr;column-gap:46px;align-items:center}.plan-panel .eyebrow,.plan-name,.plan-price{grid-column:1}.benefit-list{grid-column:2;grid-row:1 / span 3;align-self:end;margin-bottom:18px}.plan-panel .btn{grid-column:2;justify-self:start;width:auto;min-width:230px}.plan-caption{grid-column:2}.faq-layout{grid-template-columns:.8fr 1.2fr;gap:60px}.booking-layout{grid-template-columns:1fr .78fr;align-items:center;gap:60px}.booking-form{padding:28px}.location-layout{grid-template-columns:1fr 1fr;align-items:center;gap:44px}.map-frame{height:360px}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}footer{padding-bottom:24px}.mobile-bottom{display:none}}
+    @media(min-width:700px){.wrap{width:min(var(--max),calc(100% - 64px))}.nav-links{display:flex}.gallery-section,.schedule-section,.pricing-section,.faq-section,.location-section{padding-top:96px;padding-bottom:100px}.gallery-track{grid-template-columns:repeat(2,1fr);grid-auto-columns:auto;grid-auto-flow:row;overflow:visible;align-items:start;padding:0;margin-inline:0}.gallery-item{height:340px}.gallery-item:nth-child(2){height:280px;margin-top:45px}.gallery-item:nth-child(4){height:300px;margin-top:28px}.gallery-item strong{font-size:34px}.schedule-list{grid-template-columns:1fr 1fr;column-gap:34px}.schedule-row{grid-template-columns:100px 1fr}.plan-panel{padding:34px 36px;max-width:none;margin-top:28px;display:grid;grid-template-columns:.86fr 1.14fr;column-gap:46px;align-items:center}.plan-panel .eyebrow,.plan-name,.plan-price{grid-column:1}.benefit-list{grid-column:2;grid-row:1 / span 3;align-self:end;margin-bottom:18px}.plan-panel .btn{grid-column:2;justify-self:start;width:auto;min-width:230px}.plan-caption{grid-column:2}.faq-layout{grid-template-columns:.8fr 1.2fr;gap:60px}.booking-layout{grid-template-columns:1fr .78fr;align-items:center;gap:60px}.booking-form{padding:28px}.location-layout{grid-template-columns:1fr 1fr;align-items:center;gap:44px}.map-frame{height:360px}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}footer{padding-bottom:24px}.mobile-bottom{display:none}}
     @media(min-width:1000px){.gallery-track{grid-template-columns:1.05fr .8fr 1.05fr .9fr;gap:14px}.gallery-item{height:370px}.gallery-item:nth-child(2){height:305px;margin-top:64px}.gallery-item:nth-child(4){height:325px;margin-top:35px}.schedule-list{column-gap:66px}.plan-tabs button{min-width:160px}.booking-layout{gap:90px}}
   </style>
 </head>
@@ -67,7 +110,7 @@
     </nav>
   </header>
   <main>
-    <section class="hero" id="inicio">
+    <section class="hero" id="inicio" data-model="assets/Meshy_AI_Black_Belt_Resolve_1025162705_texture.fbx.glb">
       <div class="hero-copy">
         <div class="eyebrow">Randori Dojo · Jiu-Jitsu Brasileño y Grappling</div>
         <h1 class="display">Entrena con propósito.<br><em>Evoluciona</em> en el tatami.</h1>
@@ -136,12 +179,10 @@
     // Respaldo: el overlay de entrada se elimina aunque falle la carga del visor 3D.
     (function(){const intro=document.querySelector('.intro-mark');if(!intro)return;const rm=()=>intro.remove();intro.addEventListener('animationend',e=>{if(e.target===intro)rm()});setTimeout(rm,1800)})();
   </script>
-  <script src="vendor/three/three.min.js"></script>
-  <script src="vendor/three/fflate.min.js"></script>
-  <script src="vendor/three/FBXLoader.js"></script>
-  <script src="vendor/three/OrbitControls.js"></script>
-  <script src="assets/belt-model-data.js"></script>
-  <script src="scripts/belt-viewer.js"></script>
+  <script defer src="vendor/three/three.min.js"></script>
+  <script defer src="vendor/three/GLTFLoader.js"></script>
+  <script defer src="vendor/three/OrbitControls.js"></script>
+  <script defer src="scripts/belt-viewer.js"></script>
   <script>
     const scheduleData=[
       ['Grappling',[['Lunes','20:00 – 21:30']]],

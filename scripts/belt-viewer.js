@@ -104,7 +104,7 @@ applyInputMode();
   const updateFit = () => {
     const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
     const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
-    fitDistance = (1 / Math.sin(Math.min(vHalf, hHalf))) * SPHERE_MARGIN * (isCompact() ? 0.92 : 1);
+    fitDistance = (1 / Math.sin(Math.min(vHalf, hHalf))) * SPHERE_MARGIN * (isCompact() ? 0.92 : 0.9);
     controls.minDistance = fitDistance * 0.5;
     controls.maxDistance = fitDistance * 1.8;
     if (!userZoomed) {

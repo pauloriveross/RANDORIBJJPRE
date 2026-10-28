@@ -8,7 +8,7 @@
   }
 
   const host = document.getElementById('inicio');
-  if (!host || !window.THREE || !THREE.GLTFLoader || !THREE.OrbitControls) return;
+  if (!host || !window.THREE || !THREE.GLTFLoader || !THREE.OrbitControls || !THREE.DRACOLoader) return;
 
   const MODEL_URL = host.dataset.model || 'assets/Meshy_AI_Black_Belt_Resolve_1025162705_texture.fbx.glb';
 
@@ -286,7 +286,11 @@ const endDrag = () => { dragX = null; dragging = false; };
     sync();
   };
 
-  new THREE.GLTFLoader().load(
+  const gltfLoader = new THREE.GLTFLoader();
+  const dracoLoader = new THREE.DRACOLoader();
+  dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');
+  gltfLoader.setDRACOLoader(dracoLoader);
+  gltfLoader.load(
     MODEL_URL,
     (gltf) => { try { onLoaded(gltf); } catch (error) { console.error('Randori 3D belt viewer:', error); fail(); } },
     undefined,

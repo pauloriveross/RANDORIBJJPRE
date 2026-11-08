@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -93,7 +93,7 @@
     .belt-error{position:absolute;z-index:3;left:14px;bottom:14px;margin:0;padding:9px 12px;background:#0d0d0d;border-left:3px solid var(--red);color:#ffd7dc;font-size:11px;max-width:min(360px,calc(100% - 28px))}
     .hero-canvas{touch-action:pan-y}
     @media(min-width:1000px){.hero-canvas{touch-action:none}}
-    /* ===== MÃ“VIL (<700px) ===== */
+    /* ===== MÓVIL (<700px) ===== */
     @media(max-width:699px){
       html{scroll-padding-top:70px}
       body{overflow-x:clip}
@@ -112,7 +112,6 @@
       .hero-canvas{height:min(88vw,340px);min-height:230px}
       .gallery-head{flex-direction:column;align-items:flex-start;gap:14px}
       .gallery-head .copy{max-width:none}
-      .schedule-row{grid-template-columns:minmax(96px,.55fr) 1fr}
       .plan-name{font-size:40px}
       .plan-panel .btn{min-height:50px}
       .booking-section h2{max-width:none}
@@ -197,15 +196,16 @@
     @media(min-width:700px){.gal-track{gap:14px}.gal-item{flex-basis:clamp(260px,30vw,340px)}.gal-lb-stage{padding:0 84px 26px}.gal-lb-nav.prev{left:20px}.gal-lb-nav.next{right:20px}}
     @media(prefers-reduced-motion:reduce){.gal-item{opacity:1;transform:none}.gal-open img{transition:none}}
 
-    .schedule-section{padding:74px 0 82px;background:#111}.section-heading{display:flex;flex-direction:column;gap:12px;margin-bottom:26px}.section-heading .copy{margin:0;font-size:13px}.schedule-tabs,.plan-tabs{display:flex;gap:0;border-bottom:1px solid #4a4a4a;overflow-x:auto;scrollbar-width:none}.schedule-tabs button,.plan-tabs button{flex:1;min-width:max-content;min-height:47px;padding:0 15px;border:0;border-bottom:3px solid transparent;background:transparent;color:#999;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.schedule-tabs button[aria-selected=true],.plan-tabs button[aria-selected=true]{color:#fff;border-color:var(--red)}.schedule-list{display:grid;grid-template-columns:1fr;margin-top:12px}.schedule-row{display:grid;grid-template-columns:minmax(90px,.7fr) 1fr;gap:14px;padding:17px 0;border-bottom:1px solid #333}.schedule-day{font:700 18px/.9 var(--display);text-transform:uppercase}.schedule-day small{display:block;margin-top:6px;font:600 9px/1.3 var(--body);letter-spacing:.1em;color:#888}.schedule-info{font-size:12px}.schedule-info strong{display:block;margin-bottom:3px;font-size:13px}.schedule-info span{color:#999}.schedule-note{color:#888;font-size:10px;margin-top:15px}
+    .schedule-section{padding:74px 0 82px;background:#111}.section-heading{display:flex;flex-direction:column;gap:12px;margin-bottom:26px}.section-heading .copy{margin:0;font-size:13px}.schedule-tabs,.plan-tabs{display:flex;gap:0;border-bottom:1px solid #4a4a4a;overflow-x:auto;scrollbar-width:none}.schedule-tabs button,.plan-tabs button{flex:1;min-width:max-content;min-height:47px;padding:0 15px;border:0;border-bottom:3px solid transparent;background:transparent;color:#999;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.schedule-tabs button[aria-selected=true],.plan-tabs button[aria-selected=true]{color:#fff;border-color:var(--red)}
+    .schedule-media{margin:0}.schedule-media a{position:relative;display:block;overflow:hidden;border:1px solid #2f2f2f;background:#1a1a1a}.schedule-media img{width:100%;height:auto;aspect-ratio:2576/1522;transition:transform .6s cubic-bezier(.2,.7,.2,1)}.schedule-zoom{position:absolute;right:0;top:0;background:var(--red);color:#fff;padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.schedule-hint{margin:12px 0 0;color:#888;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}@media(hover:hover){.schedule-media a:hover img{transform:scale(1.015)}}
     .pricing-section{padding:76px 0 82px;background:#e9e9e7;color:#111}.pricing-section .eyebrow{color:#555}.pricing-section .section-heading .copy{color:#555}.plan-tabs{border-color:#b9b9b6}.plan-tabs button{color:#777}.plan-tabs button[aria-selected=true]{color:#111;border-color:var(--red)}.plan-panel{position:relative;margin-top:22px;background:#fff;padding:23px 20px 21px;border:1px solid #d1d1ce}.popular-tag{position:absolute;right:0;top:0;background:var(--red);color:#fff;padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.plan-name{font:800 45px/.9 var(--display);text-transform:uppercase;margin:4px 0}.plan-price{font-size:13px;color:#666;margin:9px 0 21px}.plan-price strong{display:block;color:#111;font:700 22px/1.3 var(--body)}.benefit-list{padding:0;margin:0 0 24px;list-style:none;display:grid;gap:12px}.benefit-list li{display:flex;align-items:flex-start;gap:10px;font-size:12px}.check{color:var(--red);font-weight:900}.plan-panel .btn{width:100%}.plan-caption{font-size:10px;color:#777;margin:13px 0 0}
-    .faq-section{padding:76px 0 82px;background:#fff;color:#111}.faq-layout{display:grid;gap:25px}.faq-layout .copy{color:#686868;font-size:13px}.faq-list{border-top:1px solid #ccc}.faq-list details{border-bottom:1px solid #ccc}.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:15px;align-items:center;padding:19px 0;font:700 17px/1.2 var(--display);text-transform:uppercase}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:'+';font:500 24px/1 var(--body);color:var(--red)}.faq-list details[open] summary:after{content:'âˆ’'}.faq-list details p{margin:0;padding:0 30px 19px 0;max-width:65ch;color:#666;font-size:12px}
+    .faq-section{padding:76px 0 82px;background:#fff;color:#111}.faq-layout{display:grid;gap:25px}.faq-layout .copy{color:#686868;font-size:13px}.faq-list{border-top:1px solid #ccc}.faq-list details{border-bottom:1px solid #ccc}.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:15px;align-items:center;padding:19px 0;font:700 17px/1.2 var(--display);text-transform:uppercase}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:'+';font:500 24px/1 var(--body);color:var(--red)}.faq-list details[open] summary:after{content:'−'}.faq-list details p{margin:0;padding:0 30px 19px 0;max-width:65ch;color:#666;font-size:12px}
     .booking-section{padding:72px 0 82px;background:var(--red)}.booking-layout{display:grid;gap:26px}.booking-section .eyebrow{color:#ffe2e5}.booking-section .eyebrow:before{background:#fff}.booking-section h2{font-size:clamp(49px,10vw,92px);max-width:9ch;margin:15px 0}.booking-section .copy{color:#ffe4e7;font-size:13px}.booking-form{display:grid;gap:12px;background:#fff;padding:19px;color:#111}.field{display:grid;gap:6px}.field label{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.field input,.field select{width:100%;min-height:46px;border:1px solid #ccc;background:#fff;padding:0 11px;color:#111;font-size:12px}.field input::placeholder{color:#888}.booking-form .btn{width:100%;background:#111}.booking-form .btn:hover{background:#333}.form-note{margin:0;color:#666;font-size:10px}.form-status{min-height:18px;margin:0;color:#111;font-size:11px;font-weight:700}
     .location-section{padding:70px 0 66px;background:#111}.location-layout{display:grid;gap:20px}.location-copy .copy{font-size:13px}.map-frame{height:270px;width:100%;border:0;filter:grayscale(1) contrast(1.05);background:#242424}.map-wrap{position:relative;overflow:hidden;border:1px solid #3b3b3b}.map-label{position:absolute;left:11px;top:11px;z-index:1;background:#0d0d0d;padding:6px 8px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.address-block{display:flex;align-items:flex-start;gap:12px;margin:17px 0 21px}.address-pin{color:var(--red);font-size:20px}.address-block strong{display:block;font-size:13px}.address-block span{display:block;color:#aaa;font-size:11px}.location-actions{display:flex;flex-wrap:wrap;gap:9px}.location-actions .btn{min-height:46px;padding:0 14px;font-size:10px}
     footer{background:#070707;border-top:1px solid #272727;padding:23px 0 78px;color:#999;font-size:10px}.footer-inner{display:flex;flex-direction:column;gap:14px}.footer-brand{display:flex;align-items:center;gap:8px;color:#fff;font:700 16px var(--display);text-transform:uppercase}.footer-brand img{width:28px;height:28px;object-fit:contain;background:#fff;border-radius:50%}.footer-links{display:flex;flex-wrap:wrap;gap:15px}.footer-links a:hover{color:#fff}.mobile-bottom{position:fixed;z-index:49;left:0;right:0;bottom:0;padding:9px 14px calc(9px + env(safe-area-inset-bottom));background:rgba(13,13,13,.96);border-top:1px solid #343434;display:flex;justify-content:center}.mobile-bottom .btn{width:min(100%,500px);min-height:46px}
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}.reveal.visible{opacity:1;transform:none}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
-    @media(min-width:700px){.wrap{width:min(var(--max),calc(100% - 64px))}.nav-links{display:flex}.gallery-section,.schedule-section,.pricing-section,.faq-section,.location-section{padding-top:96px;padding-bottom:100px}.schedule-list{grid-template-columns:1fr 1fr;column-gap:34px}.schedule-row{grid-template-columns:100px 1fr}.plan-panel{padding:34px 36px;max-width:none;margin-top:28px;display:grid;grid-template-columns:.86fr 1.14fr;column-gap:46px;align-items:center}.plan-panel .eyebrow,.plan-name,.plan-price{grid-column:1}.benefit-list{grid-column:2;grid-row:1 / span 3;align-self:end;margin-bottom:18px}.plan-panel .btn{grid-column:2;justify-self:start;width:auto;min-width:230px}.plan-caption{grid-column:2}.faq-layout{grid-template-columns:.8fr 1.2fr;gap:60px}.booking-layout{grid-template-columns:1fr .78fr;align-items:center;gap:60px}.booking-form{padding:28px}.location-layout{grid-template-columns:1fr 1fr;align-items:center;gap:44px}.map-frame{height:360px}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}footer{padding-bottom:24px}.mobile-bottom{display:none}}
-    @media(min-width:1000px){.schedule-list{column-gap:66px}.plan-tabs button{min-width:160px}.booking-layout{gap:90px}}
+    @media(min-width:700px){.wrap{width:min(var(--max),calc(100% - 64px))}.nav-links{display:flex}.gallery-section,.schedule-section,.pricing-section,.faq-section,.location-section{padding-top:96px;padding-bottom:100px}.plan-panel{padding:34px 36px;max-width:none;margin-top:28px;display:grid;grid-template-columns:.86fr 1.14fr;column-gap:46px;align-items:center}.plan-panel .eyebrow,.plan-name,.plan-price{grid-column:1}.benefit-list{grid-column:2;grid-row:1 / span 3;align-self:end;margin-bottom:18px}.plan-panel .btn{grid-column:2;justify-self:start;width:auto;min-width:230px}.plan-caption{grid-column:2}.faq-layout{grid-template-columns:.8fr 1.2fr;gap:60px}.booking-layout{grid-template-columns:1fr .78fr;align-items:center;gap:60px}.booking-form{padding:28px}.location-layout{grid-template-columns:1fr 1fr;align-items:center;gap:44px}.map-frame{height:360px}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}footer{padding-bottom:24px}.mobile-bottom{display:none}}
+    @media(min-width:1000px){.plan-tabs button{min-width:160px}.booking-layout{gap:90px}}
   </style>
 </head>
 <body>
@@ -244,7 +244,7 @@
           <p class="gal-hint">Arrastra o desliza · toca una foto para ampliarla</p>
         </div>
         <dialog class="gal-lb" id="gal-lb" aria-label="Foto ampliada">
-          <div class="gal-lb-top"><span class="gal-lb-count" id="gal-lb-count">01 / 29</span><button type="button" class="gal-btn" id="gal-lb-close" aria-label="Cerrar">âœ•</button></div>
+          <div class="gal-lb-top"><span class="gal-lb-count" id="gal-lb-count">01 / 29</span><button type="button" class="gal-btn" id="gal-lb-close" aria-label="Cerrar">✕</button></div>
           <div class="gal-lb-stage" id="gal-lb-stage">
             <button type="button" class="gal-btn gal-lb-nav prev" id="gal-lb-prev" aria-label="Foto anterior">←</button>
             <img id="gal-lb-img" alt="">
@@ -256,7 +256,11 @@
     <section class="schedule-section" id="horarios">
       <div class="wrap">
         <div class="section-heading"><div class="eyebrow">Encuentra tu clase</div><h2 class="section-title">Horarios</h2><p class="copy">El plan mensual incluye todos los horarios. Coordina tu primera clase por WhatsApp.</p></div>
-        <div class="schedule-list" id="schedule-list" aria-live="polite"></div>
+        <figure class="schedule-media">
+            <img src="assets/horarios.jpg" width="2576" height="1522" loading="lazy" decoding="async" alt="Horario semanal de Randori Dojo en Ñuñoa: lunes 20:00 a 21:30 Grappling (segundo piso); martes 19:30 a 21:00 Jiu-Jitsu con gi Brasileño (primer piso); miércoles 20:00 a 21:30 Grappling (segundo piso); jueves 19:30 a 21:00 Grappling (primer piso); viernes 20:00 a 21:30 Jiu-Jitsu con gi Brasileño (segundo piso); sábado sin clases; domingo 10:30 a 12:00 Open Mat.">
+            <span class="schedule-zoom" aria-hidden="true">Ampliar ↗</span>
+          </a>
+        </figure>
       </div>
     </section>
     <section class="pricing-section" id="planes">
@@ -308,18 +312,9 @@
   <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script defer src="scripts/belt-viewer.js"></script>
   <script>
-    const scheduleData=[
-      ['Grappling',[['Lunes','20:00 – 21:30']]],
-      ['Jiu-Jitsu Brasileño (GI)',[['Martes','19:30 – 21:00']]],
-      ['Grappling',[['Miércoles','20:00 – 21:30']]],
-      ['Jiu-Jitsu Brasileño (GI)',[['Jueves','19:30 – 21:00']]],
-      ['Grappling',[['Viernes','20:00 – 21:30']]]
-    ];
-    const scheduleList=document.getElementById('schedule-list');
-    scheduleList.innerHTML=scheduleData.map(([name,rows])=>rows.map(([day,time])=>`<article class="schedule-row"><div class="schedule-day">${day}<small>${time}</small></div><div class="schedule-info"><strong>${name}</strong><span>Incluido en el plan mensual</span></div></article>`).join('')).join('');
     const planData={
-  mensual:{name:'Plan Mensual',price:'$50.990 / mes',priceNote:'Matrícula única de $10.000.',benefits:['Acceso a todos los horarios','Grappling (lunes, miércoles y viernes)','Jiu-Jitsu Brasileño con gi (martes y jueves)','Acompañamiento del equipo'],caption:'El valor mensual incluye todos los horarios. La matrícula de $10.000 se paga una sola vez.',formValue:'Plan Mensual · $50.990/mes + matrícula $10.000'},
-  trimestral:{name:'Plan Trimestral',price:'$134.990 / 3 meses',priceNote:'Matrícula aparte: $10.000.',benefits:['Acceso a todos los horarios','Grappling (lunes, miércoles y viernes)','Jiu-Jitsu Brasileño con gi (martes y jueves)','Acompañamiento del equipo','Equivalente a $44.997 por mes'],caption:'Tres meses de acceso completo. La matrícula de $10.000 se paga una sola vez.',formValue:'Plan Trimestral · $134.990 (3 meses) + matrícula $10.000'}
+  mensual:{name:'Plan Mensual',price:'$50.990 / mes',priceNote:'Matrícula única de $10.000.',benefits:['Acceso a todos los horarios','Grappling (lunes, miércoles y jueves)','Jiu-Jitsu Brasileño con gi (martes y viernes)','Acompañamiento del equipo'],caption:'El valor mensual incluye todos los horarios. La matrícula de $10.000 se paga una sola vez.',formValue:'Plan Mensual · $50.990/mes + matrícula $10.000'},
+  trimestral:{name:'Plan Trimestral',price:'$134.990 / 3 meses',priceNote:'Matrícula aparte: $10.000.',benefits:['Acceso a todos los horarios','Grappling (lunes, miércoles y jueves)','Jiu-Jitsu Brasileño con gi (martes y viernes)','Acompañamiento del equipo','Equivalente a $44.997 por mes'],caption:'Tres meses de acceso completo. La matrícula de $10.000 se paga una sola vez.',formValue:'Plan Trimestral · $134.990 (3 meses) + matrícula $10.000'}
 };
 function renderPlan(key){
   const p=planData[key];
@@ -336,7 +331,7 @@ document.querySelectorAll('.plan-tabs button').forEach(btn=>btn.addEventListener
 renderPlan('mensual');
 document.getElementById('booking-form').addEventListener('submit',event=>{event.preventDefault();const form=new FormData(event.currentTarget);const name=String(form.get('name')||'').trim();if(!name){document.getElementById('form-status').textContent='Escribe tu nombre para preparar el mensaje.';return}const message=`Hola Randori BJJ, soy ${name}. Quiero coordinar una clase de prueba. Plan: ${form.get('plan')}. Nivel: ${form.get('level')}. Preferencia: ${form.get('time')}. ¿Me ayudan con los horarios?`;document.getElementById('form-status').textContent='Abriendo WhatsApp para que envíes tu solicitud...';window.open(`https://wa.me/56978792166?text=${encodeURIComponent(message)}`,'_blank','noopener,noreferrer')});
     document.getElementById('year').textContent=new Date().getFullYear();
-    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.gallery-head,.section-heading,.schedule-list,.plan-panel,.faq-list,.booking-layout>div,.booking-form,.location-copy,.map-wrap').forEach(el=>{el.classList.add('reveal');observer.observe(el)});
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.gallery-head,.section-heading,.schedule-media,.plan-panel,.faq-list,.booking-layout>div,.booking-form,.location-copy,.map-wrap').forEach(el=>{el.classList.add('reveal');observer.observe(el)});
   </script>
 
   <script>

@@ -203,6 +203,28 @@
     .booking-section{padding:72px 0 82px;background:var(--red)}.booking-layout{display:grid;gap:26px}.booking-section .eyebrow{color:#ffe2e5}.booking-section .eyebrow:before{background:#fff}.booking-section h2{font-size:clamp(49px,10vw,92px);max-width:9ch;margin:15px 0}.booking-section .copy{color:#ffe4e7;font-size:13px}.booking-form{display:grid;gap:12px;background:#fff;padding:19px;color:#111}.field{display:grid;gap:6px}.field label{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.field input,.field select{width:100%;min-height:46px;border:1px solid #ccc;background:#fff;padding:0 11px;color:#111;font-size:12px}.field input::placeholder{color:#888}.booking-form .btn{width:100%;background:#111}.booking-form .btn:hover{background:#333}.form-note{margin:0;color:#666;font-size:10px}.form-status{min-height:18px;margin:0;color:#111;font-size:11px;font-weight:700}
     .location-section{padding:70px 0 66px;background:#111}.location-layout{display:grid;gap:20px}.location-copy .copy{font-size:13px}.map-frame{height:270px;width:100%;border:0;filter:grayscale(1) contrast(1.05);background:#242424}.map-wrap{position:relative;overflow:hidden;border:1px solid #3b3b3b}.map-label{position:absolute;left:11px;top:11px;z-index:1;background:#0d0d0d;padding:6px 8px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.address-block{display:flex;align-items:flex-start;gap:12px;margin:17px 0 21px}.address-pin{color:var(--red);font-size:20px}.address-block strong{display:block;font-size:13px}.address-block span{display:block;color:#aaa;font-size:11px}.location-actions{display:flex;flex-wrap:wrap;gap:9px}.location-actions .btn{min-height:46px;padding:0 14px;font-size:10px}
     footer{background:#070707;border-top:1px solid #272727;padding:23px 0 78px;color:#999;font-size:10px}.footer-inner{display:flex;flex-direction:column;gap:14px}.footer-brand{display:flex;align-items:center;gap:8px;color:#fff;font:700 16px var(--display);text-transform:uppercase}.footer-brand img{width:28px;height:28px;object-fit:contain;background:#fff;border-radius:50%}.footer-links{display:flex;flex-wrap:wrap;gap:15px}.footer-links a:hover{color:#fff}.mobile-bottom{position:fixed;z-index:49;left:0;right:0;bottom:0;padding:9px 14px calc(9px + env(safe-area-inset-bottom));background:rgba(13,13,13,.96);border-top:1px solid #343434;display:flex;justify-content:center}.mobile-bottom .btn{width:min(100%,500px);min-height:46px}
+    /* ===== MODALES LEGALES (descargo de responsabilidad y privacidad) ===== */
+    .footer-links button{padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer;text-decoration:underline;text-decoration-color:#444;text-underline-offset:3px}.footer-links button:hover{color:#fff;text-decoration-color:var(--red)}.footer-links button:focus-visible{outline:3px solid #ff6173;outline-offset:3px}
+    .legal-modal{border:1px solid #333;padding:0;margin:auto;width:min(680px,calc(100% - 24px));max-height:min(88dvh,820px);background:var(--panel);color:#fff;overflow:hidden}
+    .legal-modal::backdrop{background:rgba(0,0,0,.82)}
+    .legal-modal[open]{display:flex;flex-direction:column;animation:lbIn .25s ease}
+    .legal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 20px 16px;border-bottom:1px solid #2c2c2c;border-top:4px solid var(--red)}
+    .legal-head h2{margin:8px 0 0;font:800 clamp(30px,6vw,42px)/.92 var(--display);letter-spacing:-.01em;text-transform:uppercase}
+    .legal-close{flex:0 0 auto;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #555;background:transparent;color:#fff;font-size:18px;line-height:1;cursor:pointer;transition:background .18s,border-color .18s}
+    .legal-close:hover{background:var(--red);border-color:var(--red)}
+    .legal-close:focus-visible{outline:3px solid #ff6173;outline-offset:3px}
+    .legal-body{overflow-y:auto;overscroll-behavior:contain;padding:18px 20px 8px;font-size:13px;color:#c9c9c9;-webkit-overflow-scrolling:touch}
+    .legal-body h3{margin:20px 0 6px;font:700 19px/1.1 var(--display);letter-spacing:.02em;text-transform:uppercase;color:#fff}
+    .legal-body h3:first-child{margin-top:0}
+    .legal-body p{margin:0 0 10px}
+    .legal-body ul{margin:0 0 10px;padding-left:18px}.legal-body li{margin-bottom:5px}
+    .legal-body a{color:#fff;text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
+    .legal-body strong{color:#fff}
+    .legal-updated{margin:16px 0 0;color:#8a8a8a;font-size:11px}
+    .legal-foot{display:flex;justify-content:flex-end;padding:14px 20px calc(14px + env(safe-area-inset-bottom));border-top:1px solid #2c2c2c}
+    .legal-foot .btn{min-height:46px}
+    @media(max-width:699px){.legal-foot .btn{width:100%}}
+    body.modal-open{overflow:hidden}
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}.reveal.visible{opacity:1;transform:none}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
     @media(min-width:700px){.wrap{width:min(var(--max),calc(100% - 64px))}.nav-links{display:flex}.gallery-section,.schedule-section,.pricing-section,.faq-section,.location-section{padding-top:96px;padding-bottom:100px}.plan-panel{padding:34px 36px;max-width:none;margin-top:28px;display:grid;grid-template-columns:.86fr 1.14fr;column-gap:46px;align-items:center}.plan-panel .eyebrow,.plan-name,.plan-price{grid-column:1}.benefit-list{grid-column:2;grid-row:1 / span 3;align-self:end;margin-bottom:18px}.plan-panel .btn{grid-column:2;justify-self:start;width:auto;min-width:230px}.plan-caption{grid-column:2}.faq-layout{grid-template-columns:.8fr 1.2fr;gap:60px}.booking-layout{grid-template-columns:1fr .78fr;align-items:center;gap:60px}.booking-form{padding:28px}.location-layout{grid-template-columns:1fr 1fr;align-items:center;gap:44px}.map-frame{height:360px}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}footer{padding-bottom:24px}.mobile-bottom{display:none}}
     @media(min-width:1000px){.plan-tabs button{min-width:160px}.booking-layout{gap:90px}}
@@ -300,7 +322,56 @@
       </div>
     </section>
   </main>
-  <footer><div class="wrap footer-inner"><a href="#inicio" class="footer-brand"><img src="assets/logorandori.jpeg" alt=""><span>Randori BJJ</span></a><div class="footer-links"><a href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/56978792166?text=Hola%20Randori%20BJJ" target="_blank" rel="noopener">WhatsApp</a><a href="#preguntas">Preguntas frecuentes</a></div><span>© <span id="year"></span> Randori Dojo · Jiu-Jitsu Brasileño y Grappling</span></div></footer>
+  <footer><div class="wrap footer-inner"><a href="#inicio" class="footer-brand"><img src="assets/logorandori.jpeg" alt=""><span>Randori BJJ</span></a><div class="footer-links"><a href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/56978792166?text=Hola%20Randori%20BJJ" target="_blank" rel="noopener">WhatsApp</a><a href="#preguntas">Preguntas frecuentes</a><button type="button" data-legal="legal-disclaimer" aria-haspopup="dialog">Exención de responsabilidad</button><button type="button" data-legal="legal-privacy" aria-haspopup="dialog">Aviso de privacidad</button></div><span>© <span id="year"></span> Randori Dojo · Jiu-Jitsu Brasileño y Grappling</span></div></footer>
+
+  <!-- Modal: exención de responsabilidad deportiva y de salud -->
+  <dialog class="legal-modal" id="legal-disclaimer" aria-labelledby="legal-disclaimer-title">
+    <div class="legal-head">
+      <div><div class="eyebrow">Información importante</div><h2 id="legal-disclaimer-title">Exención de responsabilidad deportiva y de salud</h2></div>
+      <button type="button" class="legal-close" data-close aria-label="Cerrar">✕</button>
+    </div>
+    <div class="legal-body">
+      <h3>Salud y aptitud médica</h3>
+      <p>La información publicada en este sitio web (clases, horarios, planes y contenidos en general) es de carácter informativo y <strong>no sustituye en ningún caso una evaluación, diagnóstico o consejo médico profesional</strong>.</p>
+      <p>Antes de iniciar la práctica de Jiu-Jitsu Brasileño o Grappling, cada persona debe contar con las aptitudes físicas básicas y el estado de salud adecuados para una actividad de contacto físico y esfuerzo intenso. Si tienes una lesión, enfermedad, condición cardiovascular, respiratoria u otra condición de salud, o estás embarazada, te recomendamos consultar previamente con un profesional de la salud y obtener su autorización para practicar.</p>
+      <p>Si durante una clase sientes dolor, mareo o cualquier malestar, debes detener la práctica e informar de inmediato al instructor.</p>
+
+      <h3>Asunción implícita de riesgo</h3>
+      <p>El Jiu-Jitsu Brasileño y el Grappling son <strong>deportes de contacto</strong> que conllevan riesgos inherentes de lesiones, tales como esguinces, contusiones, torceduras, fracturas u otras lesiones físicas, incluso cuando se entrena con la debida supervisión y siguiendo las normas de seguridad.</p>
+      <p>Al asistir a clases, open mat o cualquier actividad de la academia, la persona reconoce que conoce estos riesgos y que participa de forma voluntaria, asumiéndolos de manera consciente.</p>
+
+      <h3>Inscripción y consentimiento informado</h3>
+      <p>La inscripción presencial en la academia requiere la <strong>firma de un consentimiento informado y liberación de responsabilidad física</strong>, que se completa directamente en Randori Dojo antes de comenzar a entrenar. Coordinar una clase de prueba por este sitio o por WhatsApp no reemplaza ese documento.</p>
+      <p>Si tienes dudas sobre este aviso, escríbenos por <a href="https://wa.me/56978792166?text=Hola%20Randori%20BJJ%2C%20tengo%20una%20consulta%20sobre%20el%20consentimiento%20informado." target="_blank" rel="noopener">WhatsApp</a> antes de tu primera clase.</p>
+      <p class="legal-updated">Última actualización: noviembre de 2026.</p>
+    </div>
+    <div class="legal-foot"><button type="button" class="btn" data-close>Entendido</button></div>
+  </dialog>
+
+  <!-- Modal: aviso de privacidad (Ley N° 19.628) -->
+  <dialog class="legal-modal" id="legal-privacy" aria-labelledby="legal-privacy-title">
+    <div class="legal-head">
+      <div><div class="eyebrow">Tus datos</div><h2 id="legal-privacy-title">Aviso de privacidad</h2></div>
+      <button type="button" class="legal-close" data-close aria-label="Cerrar">✕</button>
+    </div>
+    <div class="legal-body">
+      <h3>No recopilamos datos ni usamos cookies</h3>
+      <p>Este sitio web <strong>no recopila, almacena ni trata datos personales</strong> de sus visitantes, y <strong>no utiliza cookies</strong> propias, píxeles de seguimiento ni herramientas de analítica o publicidad.</p>
+      <p>El formulario de clase de prueba solo arma un mensaje de texto en tu navegador y abre WhatsApp para que tú decidas enviarlo. Lo que escribes en el formulario <strong>no se envía a nuestros servidores ni se guarda</strong>.</p>
+
+      <h3>Marco legal</h3>
+      <p>Este aviso se rige por la <strong>Ley N° 19.628 sobre Protección de la Vida Privada</strong> de la República de Chile. Cualquier dato personal que nos entregues voluntariamente por otros medios (por ejemplo, al escribirnos por WhatsApp o Instagram, o al inscribirte presencialmente en la academia) será usado únicamente para responder tu consulta y gestionar tu participación, y no será cedido a terceros sin tu consentimiento, salvo obligación legal.</p>
+      <p>Conforme a esa ley, puedes solicitar información sobre tus datos, su modificación, cancelación o bloqueo escribiéndonos a nuestros canales de contacto.</p>
+
+      <h3>Servicios de terceros</h3>
+      <p>Para funcionar, el sitio carga recursos de terceros: Google Fonts (tipografías), Google Maps (mapa de ubicación) y redes de distribución de contenido (cdnjs y jsDelivr) para el visor 3D. Al cargarlos, estos proveedores pueden recibir información técnica básica, como tu dirección IP, y se rigen por sus propias políticas de privacidad. Los enlaces a WhatsApp e Instagram te llevan a plataformas externas con sus propias condiciones.</p>
+
+      <h3>Contacto</h3>
+      <p>Para cualquier consulta sobre privacidad escríbenos por <a href="https://wa.me/56978792166?text=Hola%20Randori%20BJJ%2C%20tengo%20una%20consulta%20sobre%20privacidad." target="_blank" rel="noopener">WhatsApp</a> o <a href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram</a>.</p>
+      <p class="legal-updated">Última actualización: noviembre de 2026.</p>
+    </div>
+    <div class="legal-foot"><button type="button" class="btn" data-close>Cerrar</button></div>
+  </dialog>
   <div class="mobile-bottom"><a class="btn" href="#reserva">Agendar clase gratis <span class="arrow">↗</span></a></div>
   <script>
     // Respaldo: el overlay de entrada se elimina aunque falle la carga del visor 3D.
@@ -430,6 +501,21 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
     lb.addEventListener('close',()=>{goTo(li);bump()});
 
     update();
+  })();
+  </script>
+  <script>
+  // Modales legales: abren desde el footer, cierran con ✕, botón, clic fuera o Esc.
+  (function(){
+    const modals=document.querySelectorAll('.legal-modal');
+    document.querySelectorAll('[data-legal]').forEach(b=>b.addEventListener('click',()=>{
+      const m=document.getElementById(b.dataset.legal); if(!m||m.open)return;
+      m.showModal(); document.body.classList.add('modal-open'); m.querySelector('.legal-body').scrollTop=0;
+    }));
+    modals.forEach(m=>{
+      m.querySelectorAll('[data-close]').forEach(c=>c.addEventListener('click',()=>m.close()));
+      m.addEventListener('click',e=>{if(e.target===m)m.close()});
+      m.addEventListener('close',()=>{if(!document.querySelector('.legal-modal[open]'))document.body.classList.remove('modal-open')});
+    });
   })();
   </script>
 </body>

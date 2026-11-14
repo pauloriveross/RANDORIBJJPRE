@@ -1,14 +1,9 @@
 (() => {
-  // Quitar el overlay de entrada siempre, aunque el modelo falle o el hilo esté ocupado.
-  const intro = document.querySelector('.intro-mark');
-  if (intro) {
-    const removeIntro = () => intro.remove();
-    intro.addEventListener('animationend', (e) => { if (e.target === intro) removeIntro(); });
-    setTimeout(removeIntro, 1800);
-  }
+  // Avisa al preloader cuando el modelo terminó (o falló): el intro no depende de un tiempo fijo.
+  const announceReady = () => window.dispatchEvent(new Event('randori:ready'));
 
   const host = document.getElementById('inicio');
-  if (!host || !window.THREE || !THREE.GLTFLoader || !THREE.OrbitControls || !THREE.DRACOLoader) return;
+  if (!host || !window.THREE || !THREE.GLTFLoader || !THREE.OrbitControls || !THREE.DRACOLoader) { announceReady(); return; }
 
   const MODEL_URL = host.dataset.model || 'assets/Meshy_AI_Black_Belt_Resolve_1025162705_texture.fbx.glb';
 
@@ -20,6 +15,7 @@
   const fail = () => {
     host.dataset.modelState = 'error';
     host.removeAttribute('aria-busy');
+    announceReady();
     if (host.querySelector('.belt-error')) return;
     const note = document.createElement('p');
     note.className = 'belt-error';
@@ -140,8 +136,23 @@ applyInputMode();
   let readyAt = null;
   let lastFrame = 0;
   let renderQueued = false;
+  let resumeAt = 0;          // pausa breve de la autorrotación después de interactuar
+  let scrollTilt = 0;        // giro extra ligado al progreso de scroll del hero
+  let appliedTilt = 0;
   const clock = new THREE.Clock(false);
   const MIN_FRAME_MS = lowPower ? 1000 / 45 : 0;   // tope de 45 fps en táctil
+
+  let heroH = 1;             // altura del hero cacheada: el scroll no debe forzar layout
+  const measureHero = () => { heroH = host.offsetHeight || 1; };
+  const readScrollTilt = () => {
+    if (reduceMotion.matches) { scrollTilt = 0; return; }
+    scrollTilt = (Math.min(Math.max(window.scrollY, 0), heroH) / heroH) * 0.6;
+  };
+  measureHero();
+  readScrollTilt();
+  window.addEventListener('scroll', readScrollTilt, { passive: true });
+  window.addEventListener('resize', measureHero, { passive: true });
+  window.addEventListener('load', measureHero, { once: true });
 
   const shouldAnimate = () => !!modelPivot && inView && !document.hidden;
 
@@ -156,10 +167,17 @@ applyInputMode();
     const t = clock.elapsedTime;
 
     if (modelPivot) {
-      const targetSpin = (reduceMotion.matches || dragging) ? 0 : 0.3;
+      const targetSpin = (reduceMotion.matches || dragging || now < resumeAt) ? 0 : 0.3;
       spin += (targetSpin - spin) * Math.min(delta * 3, 1);
       modelPivot.rotation.y += delta * spin;
-      if (!reduceMotion.matches) modelPivot.position.y = Math.sin(t * 0.9) * 0.04;
+      if (!reduceMotion.matches) {
+        modelPivot.position.y = Math.sin(t * 0.9) * 0.04;
+        const tiltStep = (scrollTilt - appliedTilt) * Math.min(delta * 5, 1);
+        if (Math.abs(tiltStep) > 1e-5) {
+          modelPivot.rotation.y += tiltStep;
+          appliedTilt += tiltStep;
+        }
+      }
 
       if (readyAt === null) readyAt = t;
       const p = Math.min((t - readyAt) / 1.2, 1);
@@ -195,8 +213,8 @@ applyInputMode();
     requestAnimationFrame(() => { renderQueued = false; controls.update(); renderer.render(scene, camera); });
   }
 
-  controls.addEventListener('start', () => { dragging = true; start(); });
-  controls.addEventListener('end', () => { dragging = false; });
+  controls.addEventListener('start', () => { dragging = true; resumeAt = 0; start(); });
+  controls.addEventListener('end', () => { dragging = false; resumeAt = performance.now() + 900; });
   // Arrastre horizontal para pantallas táctiles (el scroll vertical queda libre)
 let dragX = null;
 canvas.addEventListener('pointerdown', (e) => {
@@ -211,7 +229,7 @@ canvas.addEventListener('pointermove', (e) => {
   dragX = e.clientX;
   requestRender();
 });
-const endDrag = () => { dragX = null; dragging = false; };
+const endDrag = () => { dragX = null; dragging = false; resumeAt = performance.now() + 900; };
 ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => canvas.addEventListener(ev, endDrag));
   controls.addEventListener('change', requestRender);
 
@@ -282,6 +300,7 @@ const endDrag = () => { dragX = null; dragging = false; };
 
     host.dataset.modelState = 'ready';
     host.removeAttribute('aria-busy');
+    announceReady();
     window.RANDORI_BELT_VIEWER = { scene, camera, controls, model: modelPivot, renderer };
     sync();
   };

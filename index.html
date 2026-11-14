@@ -112,6 +112,9 @@
       .hero h1{max-width:none;margin:12px 0 18px}
       .hero-actions{flex-direction:column;gap:9px}
       .hero-actions .btn{width:100%}
+      /* El hero llena la pantalla para que no asome la sección siguiente
+         mientras la barra inferior está oculta. */
+      .hero{min-height:calc(100vh - 64px);min-height:calc(100dvh - 64px)}
       .hero-canvas{height:min(88vw,340px);min-height:230px}
       .gallery-head{flex-direction:column;align-items:flex-start;gap:14px}
       .gallery-head .copy{max-width:none}
@@ -151,11 +154,11 @@
 
     /* ===== CARRUSEL DE GALERÍA ===== */
     .gal{position:relative}
-    .gal-track{position:relative;display:flex;align-items:flex-end;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;padding:0 0 4px;cursor:grab;-webkit-overflow-scrolling:touch}
+    .gal-track{position:relative;display:flex;align-items:flex-end;gap:12px;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;padding:0 0 4px;cursor:grab;-webkit-overflow-scrolling:touch}
     .gal-track::-webkit-scrollbar{display:none}
-    .gal-track.drag{scroll-snap-type:none;cursor:grabbing;user-select:none}
+    .gal-track.drag{cursor:grabbing;user-select:none}
     .gal-track:focus-visible{outline:3px solid var(--red);outline-offset:6px}
-    .gal-item{flex:0 0 clamp(236px,70vw,300px);margin:0;position:relative;scroll-snap-align:start;opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(min(var(--i,0),7)*80ms)}
+    .gal-item{flex:0 0 clamp(236px,70vw,300px);margin:0;position:relative;opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(min(var(--i,0),7)*80ms)}
     .gal.in .gal-item{opacity:1;transform:none}
     .gal.ready .gal-item{transition-delay:0s}
     .gal-open{display:block;position:relative;width:100%;padding:0;border:0;background:#cfcfcc;overflow:hidden;aspect-ratio:4/5;cursor:inherit;color:inherit}
@@ -165,8 +168,6 @@
     .gal-item.is-active .gal-open img{transform:scale(1);filter:none}
     .gal-open:after{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
     .gal-item.is-active .gal-open:after{transform:scaleX(1)}
-    .gal-tag{position:absolute;left:0;top:0;z-index:1;padding:8px 11px 7px;background:#111;color:#fff;font:800 16px/1 var(--display);letter-spacing:.08em;transition:background .3s}
-    .gal-item.is-active .gal-tag{background:var(--red)}
     .gal-open:focus-visible{outline:3px solid var(--red);outline-offset:3px}
     @media(hover:hover){.gal-item:not(.is-active):hover .gal-open img{transform:scale(1.04);filter:none}}
     .gal-bar{display:flex;align-items:center;gap:16px;margin-top:22px}
@@ -231,9 +232,169 @@
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}.reveal.visible{opacity:1;transform:none}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
     @media(min-width:700px){.wrap{width:min(var(--max),calc(100% - 64px))}.nav-links{display:flex}.gallery-section,.schedule-section,.pricing-section,.faq-section,.location-section{padding-top:96px;padding-bottom:100px}.plan-panel{padding:34px 36px;max-width:none;margin-top:28px;display:grid;grid-template-columns:.86fr 1.14fr;column-gap:46px;align-items:center}.plan-panel .eyebrow,.plan-name,.plan-price{grid-column:1}.benefit-list{grid-column:2;grid-row:1 / span 3;align-self:end;margin-bottom:18px}.plan-panel .btn{grid-column:2;justify-self:start;width:auto;min-width:230px}.plan-caption{grid-column:2}.faq-layout{grid-template-columns:.8fr 1.2fr;gap:60px}.booking-layout{grid-template-columns:1fr .78fr;align-items:center;gap:60px}.booking-form{padding:28px}.location-layout{grid-template-columns:1fr 1fr;align-items:center;gap:44px}.map-frame{height:360px}.footer-inner{flex-direction:row;align-items:center;justify-content:space-between}footer{padding-bottom:24px}.mobile-bottom{display:none}}
     @media(min-width:1000px){.plan-tabs button{min-width:160px}.booking-layout{gap:90px}}
+
+    /* =====================================================================
+       MOTION & POLISH — capa de mejoras progresivas
+       Regla: solo transform/opacity (y clip-path) en animaciones.
+       Todo se desactiva con prefers-reduced-motion.
+       ===================================================================== */
+    :root{--ease:cubic-bezier(.2,.7,.2,1);--header-h:76px}
+    html{scrollbar-gutter:stable}
+    /* Lenis (scroll con inercia) */
+    html.lenis,html.lenis body{height:auto}
+    html.lenis{scroll-behavior:auto!important}
+    .lenis.lenis-smooth{scroll-behavior:auto!important}
+    .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+    .lenis.lenis-stopped{overflow:hidden}
+
+    /* Intro: espera fuentes + modelo; el temporizador CSS es solo respaldo sin JS */
+    .intro-mark{animation:introOut .6s cubic-bezier(.7,0,.2,1) 4.5s forwards;transition:opacity .5s var(--ease)}
+    .intro-mark.is-done{animation:introOutNow .65s cubic-bezier(.7,0,.2,1) forwards}
+    @keyframes introOutNow{to{opacity:0;visibility:hidden}}
+
+    /* ===== Cortina entre secciones ===== */
+    main>section{position:relative}
+    .section-line{position:absolute;left:0;top:0;z-index:3;width:100%;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .12s;pointer-events:none}
+    main>section.section-in>.section-line{transform:scaleX(1)}
+    @media(min-width:700px) and (prefers-reduced-motion:no-preference){
+      main>section.stackable:not(.hero){position:sticky;top:0;box-shadow:0 -22px 46px -26px rgba(0,0,0,.55)}
+    }
+
+    /* ===== Títulos revelados por línea ===== */
+    .lines{display:block}
+    .lines .line{display:block;overflow:hidden;padding-bottom:.07em;margin-bottom:-.07em}
+    .lines .line>span{display:block;transform:translate3d(0,112%,0);transition:transform .95s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
+
+    /* ===== Hero: timeline de entrada ===== */
+    .hero .eyebrow,.hero .copy,.hero .hero-actions,.hero .quick-links{opacity:0;transform:translate3d(0,16px,0);transition:opacity .75s var(--ease),transform .85s var(--ease)}
+    body.hero-in .hero .eyebrow{opacity:1;transform:none;transition-delay:.1s}
+    body.hero-in .hero .copy{opacity:1;transform:none;transition-delay:.5s}
+    body.hero-in .hero .hero-actions{opacity:1;transform:none;transition-delay:.62s}
+    body.hero-in .hero .quick-links{opacity:1;transform:none;transition-delay:.72s}
+    body.hero-in .hero h1 .line>span{transform:none}
+    body.hero-in .hero h1 .line:nth-child(1)>span{transition-delay:.2s}
+    body.hero-in .hero h1 .line:nth-child(2)>span{transition-delay:.29s}
+    .lines.lines-in .line>span{transform:none}
+    .hero-canvas{opacity:0}
+    body.hero-in .hero-canvas{animation:heroBeltIn 1.05s var(--ease) .55s both}
+    @keyframes heroBeltIn{from{opacity:0;transform:translate3d(0,18px,0) scale(.95)}to{opacity:1;transform:none}}
+    .hero:after{transform:translate3d(0,var(--bjj-y,0px),0);will-change:transform}
+
+    /* ===== Botones: barrido + flecha + magnético ===== */
+    .btn{position:relative;isolation:isolate;overflow:hidden;transition:background .18s,border-color .18s,transform .22s var(--ease)}
+    .btn:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(255,255,255,.2),rgba(255,255,255,.03));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+    .btn:hover:before,.btn:focus-visible:before{transform:scaleX(1)}
+    .btn:hover{transform:translate3d(var(--bx,0px),calc(var(--by,0px) - 2px),0)}
+    .btn:active{transform:translate3d(var(--bx,0px),calc(var(--by,0px) + 1px),0) scale(.99)}
+    .btn .arrow{position:relative;z-index:1;transition:transform .3s var(--ease)}
+    .btn:hover .arrow{transform:translate(3px,-3px)}
+
+    /* ===== Barra móvil: visible solo después del hero ===== */
+    .mobile-bottom{transform:translate3d(0,110%,0);opacity:0;visibility:hidden;transition:transform .4s var(--ease),opacity .3s ease,visibility 0s linear .4s}
+    .mobile-bottom.show{transform:none;opacity:1;visibility:visible;transition:transform .4s var(--ease),opacity .3s ease,visibility 0s}
+
+    /* ===== Header: compacto con blur + scroll-spy ===== */
+    .site-header{transition:height .3s var(--ease),background .3s var(--ease),border-color .3s var(--ease),-webkit-backdrop-filter .3s,backdrop-filter .3s}
+    .nav-links a{position:relative;transition:color .2s}
+    .nav-links a:after{content:'';position:absolute;left:0;right:0;bottom:-7px;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+    .nav-links a:hover:after,.nav-links a.is-current:after{transform:scaleX(1)}
+    .nav-links a.is-current{color:#fff}
+    @media(min-width:700px){
+      .site-header.scrolled{height:64px;background:rgba(13,13,13,.82);border-bottom-color:#1f1f1f;-webkit-backdrop-filter:blur(12px) saturate(1.15);backdrop-filter:blur(12px) saturate(1.15)}
+    }
+
+    /* ===== Reveal + stagger ===== */
+    .reveal{transition:opacity .7s var(--ease),transform .8s var(--ease);will-change:opacity,transform}
+    .reveal.visible{will-change:auto}
+    @keyframes riseIn{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}}
+    .reveal.visible[data-stagger]>*,.reveal.visible [data-stagger]>*{animation:riseIn .6s var(--ease) both;animation-delay:calc(var(--i,0)*70ms)}
+    .schedule-media{clip-path:inset(0 0 100% 0);transition:clip-path 1s var(--ease);will-change:clip-path}
+    .schedule-media.visible{clip-path:inset(0);will-change:auto}
+
+    /* ===== FAQ: apertura/cierre animados ===== */
+    .faq-body{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .42s var(--ease),opacity .3s var(--ease)}
+    .faq-body>div{overflow:hidden;min-height:0}
+    .faq-list details[open] .faq-body{grid-template-rows:1fr;opacity:1}
+    .faq-list details.closing .faq-body{grid-template-rows:0fr;opacity:0}
+    .faq-list summary:after{transition:transform .3s var(--ease)}
+    .faq-list details[open] summary:after{transform:rotate(180deg)}
+
+    /* ===== Galería: parallax interno, skeleton y salida del lightbox ===== */
+    .gal-open:before{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(100deg,#cfcfcc 30%,#e9e9e6 46%,#cfcfcc 62%);background-size:220% 100%;animation:galShimmer 1.6s linear infinite;opacity:1;transition:opacity .45s ease}
+    .gal-item.loaded .gal-open:before{opacity:0;animation-play-state:paused}
+    @keyframes galShimmer{to{background-position:-120% 0}}
+    .gal-open img{position:relative;z-index:1;opacity:0;--is:1.1;transform:translate3d(var(--ix,0px),0,0) scale(var(--is,1.1));transition:transform .9s var(--ease),filter .5s ease,opacity .5s ease;will-change:transform,opacity}
+    .gal-item.loaded .gal-open img{opacity:1;will-change:auto}
+    .gal-item.is-active .gal-open img{--is:1;transform:translate3d(var(--ix,0px),0,0) scale(1);filter:none}
+    .gal-open:after{z-index:2}
+    @media(hover:hover){.gal-item:not(.is-active):hover .gal-open img{--is:1.04;transform:translate3d(var(--ix,0px),0,0) scale(1.04);filter:none}}
+    .gal-lb.closing{animation:lbOut .28s var(--ease) forwards}
+    @keyframes lbOut{to{opacity:0}}
+    /* Horario ampliado: en móvil se puede desplazar para leerlo */
+    .schedule-lb .gal-lb-stage{overflow:auto;overscroll-behavior:contain}
+    @media(max-width:699px){
+      .schedule-lb .gal-lb-stage{display:block;padding:0 10px 18px}
+      .schedule-lb .gal-lb-stage img{width:760px;max-width:none;max-height:none;height:auto;margin:0 auto}
+    }
+
+    /* ===== Cambio de plan: View Transition ===== */
+    .plan-panel{view-transition-name:plan-card}
+    ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+    ::view-transition-old(plan-card){animation:vtOut .3s var(--ease) both}
+    ::view-transition-new(plan-card){animation:vtIn .35s var(--ease) both}
+    @keyframes vtOut{to{opacity:0;transform:translate3d(0,4px,0)}}
+    @keyframes vtIn{from{opacity:0;transform:translate3d(0,-4px,0)}}
+
+    /* ===== Cursor personalizado (solo puntero fino con hover) ===== */
+    .cursor-dot{position:fixed;left:0;top:0;z-index:9997;width:9px;height:9px;border-radius:50%;background:var(--red);pointer-events:none;opacity:0;transform:translate3d(var(--cx,-100px),var(--cy,-100px),0) translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .25s,border-color .25s,box-shadow .25s,opacity .2s;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+    body.has-cursor .cursor-dot{opacity:1}
+    .cursor-dot:after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:800 10px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;opacity:0;transition:opacity .2s}
+    .cursor-dot.is-grow{width:34px;height:34px;background:transparent;border:1px solid rgba(214,0,28,.95);box-shadow:none}
+    .cursor-dot.is-drag{width:72px;height:72px;background:var(--red);border:0;box-shadow:0 0 0 5px rgba(214,0,28,.14)}
+    .cursor-dot.is-drag:after{opacity:1;font-size:9px;letter-spacing:.09em}
+    body.has-cursor a,body.has-cursor button,body.has-cursor summary,body.has-cursor .gal-track,body.has-cursor .hero-canvas{cursor:none}
+    /* Dentro de un dialog (top layer) el punto quedaría debajo: devolvemos el cursor nativo. */
+    body.modal-open a,body.modal-open button,body.modal-open summary,body.modal-open .gal-track{cursor:auto}
+    body.modal-open .cursor-dot{opacity:0}
+    body.modal-open{overflow:hidden}
+
+    /* ===== Táctil: sin hover pegajoso ni barridos ===== */
+    @media(hover:none){
+      .btn:hover{transform:none}
+      .btn:hover:before{transform:scaleX(0)}
+      .btn:hover .arrow{transform:none}
+    }
+
+    /* ===== Movimiento reducido ===== */
+    @media(prefers-reduced-motion:reduce){
+      main>section.stackable{position:static;box-shadow:none}
+      .section-line{transition:none}
+      .btn,.btn:before,.btn .arrow{transition:none}
+      .reveal{transition:none;opacity:1;transform:none}
+      .gal-open img{transition:none}
+      .lines .line>span,.hero h1 .line>span{transform:none!important}
+      .hero .eyebrow,.hero .copy,.hero .hero-actions,.hero .quick-links{opacity:1;transform:none}
+      .hero-canvas{opacity:1;animation:none}
+      body.hero-in .hero-canvas{animation:none;opacity:1;transform:none}
+      .hero:after{transform:none}
+      .schedule-media{clip-path:none}
+      .cursor-dot{display:none}
+      .gal-open img{opacity:1;transform:none}
+      .gal-open:before{display:none}
+      .faq-body{transition:none}
+      .intro-mark,.intro-mark.is-done{animation-duration:.01ms!important}
+    }
   </style>
 </head>
 <body>
+  <noscript><style>
+    .intro-mark{display:none!important}
+    .hero .eyebrow,.hero .copy,.hero .hero-actions,.hero .quick-links{opacity:1;transform:none}
+    .hero-canvas{opacity:1;animation:none}
+    .reveal{opacity:1;transform:none}
+    .cursor-dot{display:none}
+    .mobile-bottom{transform:none;opacity:1;visibility:visible}
+  </style></noscript>
   <div class="intro-mark" aria-hidden="true"><img src="assets/logorandori.jpeg" alt="" class="intro-logo"></div>
   <header class="site-header">
     <nav class="nav wrap" aria-label="Navegación principal">
@@ -256,7 +417,7 @@
       <div class="wrap">
         <div class="gallery-head"><div><div class="eyebrow">La vida en el tatami</div><h2 class="section-title">Así entrenamos<br>en Randori.</h2></div><p class="copy">Cada clase mezcla técnica, rolling y acondicionamiento. Entrenamos en equipo y todos son bienvenidos, sin importar el nivel con el que llegues.</p></div>
         <div class="gal" id="gal" role="region" aria-roledescription="carrusel" aria-label="Galería de la academia">
-          <div class="gal-track" id="gal-track" tabindex="0" aria-label="Fotos de entrenamientos. Usa las flechas del teclado para avanzar."></div>
+          <div class="gal-track" id="gal-track" tabindex="0" data-lenis-prevent-horizontal aria-label="Fotos de entrenamientos. Usa las flechas del teclado para avanzar."></div>
           <div class="gal-bar">
             <div class="gal-count" aria-live="polite"><b id="gal-cur">01</b><span id="gal-tot">/ 29</span></div>
             <div class="gal-progress" aria-hidden="true"><i id="gal-prog"></i></div>
@@ -282,23 +443,30 @@
       <div class="wrap">
         <div class="section-heading"><div class="eyebrow">Encuentra tu clase</div><h2 class="section-title">Horarios</h2><p class="copy">El plan mensual incluye todos los horarios. Coordina tu primera clase por WhatsApp.</p></div>
         <figure class="schedule-media">
+          <a href="assets/horarios.jpg" id="schedule-open" aria-haspopup="dialog" target="_blank" rel="noopener">
             <img src="assets/horarios.jpg" width="2576" height="1522" loading="lazy" decoding="async" alt="Horario semanal de Randori Dojo en Ñuñoa: lunes 20:00 a 21:30 Grappling (segundo piso); martes 19:30 a 21:00 Jiu-Jitsu con gi Brasileño (primer piso); miércoles 20:00 a 21:30 Grappling (segundo piso); jueves 19:30 a 21:00 Grappling (primer piso); viernes 20:00 a 21:30 Jiu-Jitsu con gi Brasileño (segundo piso); sábado sin clases; domingo 10:30 a 12:00 Open Mat.">
-            <span class="schedule-zoom" aria-hidden="true">Ampliar ↗</span>
+            <span class="schedule-zoom" aria-hidden="true">Ampliar +</span>
           </a>
         </figure>
+        <dialog class="gal-lb schedule-lb" id="schedule-lb" aria-label="Horario semanal ampliado">
+          <div class="gal-lb-top"><span class="gal-lb-count">Horario semanal</span><button type="button" class="gal-btn" id="schedule-lb-close" aria-label="Cerrar">✕</button></div>
+          <div class="gal-lb-stage" id="schedule-lb-stage">
+            <img id="schedule-lb-img" width="2576" height="1522" decoding="async" alt="Horario semanal de Randori Dojo en Ñuñoa: lunes 20:00 a 21:30 Grappling (segundo piso); martes 19:30 a 21:00 Jiu-Jitsu con gi Brasileño (primer piso); miércoles 20:00 a 21:30 Grappling (segundo piso); jueves 19:30 a 21:00 Grappling (primer piso); viernes 20:00 a 21:30 Jiu-Jitsu con gi Brasileño (segundo piso); sábado sin clases; domingo 10:30 a 12:00 Open Mat.">
+          </div>
+        </dialog>
       </div>
     </section>
     <section class="pricing-section" id="planes">
       <div class="wrap">
         <div class="section-heading"><div class="eyebrow">Elige tu plan</div><h2 class="section-title">Planes</h2><p class="copy">Dos opciones con acceso completo a todos los horarios de Grappling y Jiu-Jitsu Brasileño.</p></div>
         <div class="plan-tabs" role="tablist" aria-label="Planes disponibles"><button type="button" data-plan="mensual" aria-selected="true">Plan Mensual</button><button type="button" data-plan="trimestral" aria-selected="false">Plan Trimestral</button></div>
-<article class="plan-panel" id="plan-panel" aria-live="polite"><div class="eyebrow">Membresía Randori</div><h3 class="plan-name" id="plan-name">Plan Mensual</h3><p class="plan-price"><strong id="plan-price">$50.990 / mes</strong><span id="plan-price-note">Matrícula única de $10.000.</span></p><ul class="benefit-list" id="plan-benefits"><li><span class="check">✓</span> Acceso a todos los horarios</li><li><span class="check">✓</span> Grappling (lunes, miércoles y viernes)</li><li><span class="check">✓</span> Jiu-Jitsu Brasileño con gi (martes y jueves)</li><li><span class="check">✓</span> Acompañamiento del equipo</li></ul><a class="btn btn-dark" id="plan-cta" href="#reserva">Consultar por WhatsApp <span class="arrow">↗</span></a><p class="plan-caption" id="plan-caption">El valor mensual incluye todos los horarios. La matrícula de $10.000 se paga una sola vez.</p></article>
+<article class="plan-panel" id="plan-panel" aria-live="polite"><div class="eyebrow">Membresía Randori</div><h3 class="plan-name" id="plan-name">Plan Mensual</h3><p class="plan-price"><strong id="plan-price">$50.990 / mes</strong><span id="plan-price-note">Matrícula única de $10.000.</span></p><ul class="benefit-list" id="plan-benefits" data-stagger><li><span class="check">✓</span> Acceso a todos los horarios</li><li><span class="check">✓</span> Grappling (lunes, miércoles y viernes)</li><li><span class="check">✓</span> Jiu-Jitsu Brasileño con gi (martes y jueves)</li><li><span class="check">✓</span> Acompañamiento del equipo</li></ul><a class="btn btn-dark" id="plan-cta" href="#reserva">Consultar por WhatsApp <span class="arrow">↗</span></a><p class="plan-caption" id="plan-caption">El valor mensual incluye todos los horarios. La matrícula de $10.000 se paga una sola vez.</p></article>
       </div>
     </section>
     <section class="faq-section" id="preguntas">
       <div class="wrap faq-layout">
         <div><div class="eyebrow">Antes de tu primera clase</div><h2 class="section-title">Preguntas<br>frecuentes</h2><p class="copy">¿Tienes otra duda? Escríbenos y te ayudamos a partir.</p><a class="btn btn-dark" href="https://wa.me/56978792166?text=Hola%20Randori%20BJJ%2C%20tengo%20una%20consulta." target="_blank" rel="noopener">Preguntar por WhatsApp <span class="arrow">↗</span></a></div>
-        <div class="faq-list">
+        <div class="faq-list" data-stagger>
           <details><summary>¿Necesito experiencia previa?</summary><p>No. Agenda tu clase de prueba gratis, conoce el espacio y conversa con el equipo sobre cómo partir desde cero.</p></details>
           <details><summary>¿Qué debo llevar a mi primera clase?</summary><p>Ven con ropa deportiva cómoda, agua y ganas de aprender. Si tienes dudas sobre el uniforme o equipamiento, consúltanos antes de venir.</p></details>
           <details><summary>¿Puedo probar antes de elegir un plan?</summary><p>Sí. Agenda una clase de prueba gratis para conocer la academia, ver cómo son las clases y resolver tus dudas antes de decidir.</p></details>
@@ -308,7 +476,7 @@
     <section class="booking-section" id="reserva">
       <div class="wrap booking-layout">
         <div><div class="eyebrow">Tu primera clase es gratis</div><h2 class="display">Da el primer paso.</h2><p class="copy">Déjanos tus datos y te preparamos un mensaje para coordinar tu clase de prueba por WhatsApp.</p></div>
-        <form class="booking-form" id="booking-form">
+        <form class="booking-form" id="booking-form" data-stagger>
           <div class="field"><label for="name">Tu nombre</label><input id="name" name="name" autocomplete="name" placeholder="¿Cómo te llamas?" required></div>
           <div class="field"><label for="level">¿Has entrenado antes?</label><select id="level" name="level"><option value="Estoy empezando">Estoy empezando</option><option value="Ya tengo experiencia">Ya tengo experiencia</option></select></div>
           <div class="field"><label for="time">¿Cuándo te gustaría venir?</label><select id="time" name="time"><option value="Quiero revisar horarios">Quiero revisar horarios</option><option value="Mañana">Mañana</option><option value="Esta semana">Esta semana</option><option value="La próxima semana">La próxima semana</option></select></div>
@@ -333,7 +501,7 @@
       <div><div class="eyebrow">Información importante</div><h2 id="legal-disclaimer-title">Exención de responsabilidad deportiva y de salud</h2></div>
       <button type="button" class="legal-close" data-close aria-label="Cerrar">✕</button>
     </div>
-    <div class="legal-body">
+    <div class="legal-body" data-lenis-prevent>
       <h3>Salud y aptitud médica</h3>
       <p>La información publicada en este sitio web (clases, horarios, planes y contenidos en general) es de carácter informativo y <strong>no sustituye en ningún caso una evaluación, diagnóstico o consejo médico profesional</strong>.</p>
       <p>Antes de iniciar la práctica de Jiu-Jitsu Brasileño o Grappling, cada persona debe contar con las aptitudes físicas básicas y el estado de salud adecuados para una actividad de contacto físico y esfuerzo intenso. Si tienes una lesión, enfermedad, condición cardiovascular, respiratoria u otra condición de salud, o estás embarazada, te recomendamos consultar previamente con un profesional de la salud y obtener su autorización para practicar.</p>
@@ -357,7 +525,7 @@
       <div><div class="eyebrow">Tus datos</div><h2 id="legal-privacy-title">Aviso de privacidad</h2></div>
       <button type="button" class="legal-close" data-close aria-label="Cerrar">✕</button>
     </div>
-    <div class="legal-body">
+    <div class="legal-body" data-lenis-prevent>
       <h3>No recopilamos datos ni usamos cookies</h3>
       <p>Este sitio web <strong>no recopila, almacena ni trata datos personales</strong> de sus visitantes, y <strong>no utiliza cookies</strong> propias, píxeles de seguimiento ni herramientas de analítica o publicidad.</p>
       <p>El formulario de clase de prueba solo arma un mensaje de texto en tu navegador y abre WhatsApp para que tú decidas enviarlo. Lo que escribes en el formulario <strong>no se envía a nuestros servidores ni se guarda</strong>.</p>
@@ -377,9 +545,24 @@
   </dialog>
   <div class="mobile-bottom"><a class="btn" href="#reserva">Agendar clase gratis <span class="arrow">↗</span></a></div>
   <script>
-    // Respaldo: el overlay de entrada se elimina aunque falle la carga del visor 3D.
-    (function(){const intro=document.querySelector('.intro-mark');if(!intro)return;const rm=()=>intro.remove();intro.addEventListener('animationend',e=>{if(e.target===intro)rm()});setTimeout(rm,1800)})();
+    // Preloader real: el intro se retira cuando las fuentes y el modelo 3D están listos.
+    // El temporizador de 5 s es solo una red de seguridad (red lenta, WebGL no disponible, etc.).
+    (function(){
+      const intro=document.querySelector('.intro-mark'); if(!intro) return;
+      let fontsReady=false, modelReady=false, done=false;
+      const finish=function(){
+        if(done) return; done=true;
+        intro.classList.add('is-done');
+        document.body.classList.add('hero-in');
+        setTimeout(function(){ intro.remove(); }, 800);
+      };
+      const maybe=function(){ if(fontsReady && modelReady) finish(); };
+      (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ fontsReady=true; maybe(); });
+      window.addEventListener('randori:ready', function(){ modelReady=true; maybe(); }, {once:true});
+      setTimeout(finish, 5000);
+    })();
   </script>
+  <script defer src="vendor/lenis/lenis.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
@@ -395,17 +578,26 @@ function renderPlan(key){
   document.getElementById('plan-name').textContent=p.name;
   document.getElementById('plan-price').textContent=p.price;
   document.getElementById('plan-price-note').textContent=p.priceNote;
-  document.getElementById('plan-benefits').innerHTML=p.benefits.map(b=>`<li><span class="check">✓</span> ${b}</li>`).join('');
+  const benefits=document.getElementById('plan-benefits');
+  benefits.innerHTML=p.benefits.map(b=>`<li><span class="check">✓</span> ${b}</li>`).join('');
+  benefits.querySelectorAll('li').forEach((li,i)=>li.style.setProperty('--i',i));
   document.getElementById('plan-caption').textContent=p.caption;
   const inp=document.getElementById('selected-plan');
   if(inp) inp.value=p.formValue;
   document.querySelectorAll('.plan-tabs button').forEach(btn=>{btn.setAttribute('aria-selected',String(btn.dataset.plan===key))});
 }
-document.querySelectorAll('.plan-tabs button').forEach(btn=>btn.addEventListener('click',()=>renderPlan(btn.dataset.plan)));
+function setPlan(key){
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const resync=()=>{ if(window.__syncStack) window.__syncStack(); };
+  if(document.startViewTransition && !reduce){
+    const vt=document.startViewTransition(()=>renderPlan(key));
+    if(vt&&vt.finished) vt.finished.then(resync,resync); else resync();
+  } else { renderPlan(key); resync(); }
+}
+document.querySelectorAll('.plan-tabs button').forEach(btn=>btn.addEventListener('click',()=>setPlan(btn.dataset.plan)));
 renderPlan('mensual');
 document.getElementById('booking-form').addEventListener('submit',event=>{event.preventDefault();const form=new FormData(event.currentTarget);const name=String(form.get('name')||'').trim();if(!name){document.getElementById('form-status').textContent='Escribe tu nombre para preparar el mensaje.';return}const message=`Hola Randori BJJ, soy ${name}. Quiero coordinar una clase de prueba. Plan: ${form.get('plan')}. Nivel: ${form.get('level')}. Preferencia: ${form.get('time')}. ¿Me ayudan con los horarios?`;document.getElementById('form-status').textContent='Abriendo WhatsApp para que envíes tu solicitud...';window.open(`https://wa.me/56978792166?text=${encodeURIComponent(message)}`,'_blank','noopener,noreferrer')});
     document.getElementById('year').textContent=new Date().getFullYear();
-    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll('.gallery-head,.section-heading,.schedule-media,.plan-panel,.faq-list,.booking-layout>div,.booking-form,.location-copy,.map-wrap').forEach(el=>{el.classList.add('reveal');observer.observe(el)});
   </script>
 
   <script>
@@ -418,6 +610,7 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
     const lb=document.getElementById('gal-lb'), lbImg=document.getElementById('gal-lb-img'), lbCount=document.getElementById('gal-lb-count');
     const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover=matchMedia('(hover:hover)').matches;
+    const mqWide=matchMedia('(min-width:700px)');
     const pad=n=>String(n).padStart(2,'0');
     const items=()=>Array.from(track.children);
     let okExt=null;
@@ -426,7 +619,6 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
     for(let n=1;n<=TOTAL;n++){
       const fig=document.createElement('figure'); fig.className='gal-item'; fig.style.setProperty('--i',n-1);
       const btn=document.createElement('button'); btn.type='button'; btn.className='gal-open'; btn.setAttribute('aria-label','Ampliar foto '+n);
-      const tag=document.createElement('span'); tag.className='gal-tag'; tag.textContent=pad(n);
       const img=new Image(); img.alt='Entrenamiento en Randori, foto '+n; img.loading='lazy'; img.decoding='async'; img.draggable=false;
       const tried=new Set();
       const tryNext=()=>{
@@ -435,19 +627,79 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
         tried.add(e); img.dataset.ext=e; img.src=DIR+encodeURIComponent('randori ('+n+')')+'.'+e;
       };
       img.addEventListener('error',tryNext);
-      img.addEventListener('load',()=>{okExt=img.dataset.ext});
-      btn.append(img,tag); fig.append(btn); track.append(fig); tryNext();
+      img.addEventListener('load',()=>{okExt=img.dataset.ext;fig.classList.add('loaded')});
+      btn.append(img); fig.append(btn); track.append(fig); tryNext();
     }
 
     function leftIdx(){const l=track.scrollLeft,it=items();const i=it.findIndex(f=>f.offsetLeft>=l-8);return i<0?it.length-1:i}
     function centerIdx(){const c=track.scrollLeft+track.clientWidth/2;let b=0,d=1e9;items().forEach((f,i)=>{const m=Math.abs(f.offsetLeft+f.offsetWidth/2-c);if(m<d){d=m;b=i}});return b}
     function nearestLeft(){const l=track.scrollLeft;let b=0,d=1e9;items().forEach((f,i)=>{const m=Math.abs(f.offsetLeft-l);if(m<d){d=m;b=i}});return b}
-    function goTo(i,smooth){const it=items();if(!it.length)return;i=Math.max(0,Math.min(i,it.length-1));track.scrollTo({left:it[i].offsetLeft,behavior:(reduce||smooth===false)?'auto':'smooth'})}
+    const clampLeft=v=>Math.max(0,Math.min(track.scrollWidth-track.clientWidth,v));
+
+    // Deslizamiento con easing propio (sin scroll-snap ni scroll suave del navegador)
+    let glideRaf=0, inertiaRaf=0;
+    function stopGlide(){if(glideRaf){cancelAnimationFrame(glideRaf);glideRaf=0}}
+    function stopInertia(){if(inertiaRaf){cancelAnimationFrame(inertiaRaf);inertiaRaf=0}}
+    function glideTo(left,dur){
+      stopGlide();
+      const from=track.scrollLeft,to=clampLeft(left);
+      if(reduce||Math.abs(to-from)<1){track.scrollLeft=to;return}
+      const t0=performance.now();
+      const frame=now=>{
+        const p=Math.min((now-t0)/Math.max(dur,1),1);
+        track.scrollLeft=from+(to-from)*(1-Math.pow(1-p,3));
+        glideRaf=p<1?requestAnimationFrame(frame):0;
+      };
+      glideRaf=requestAnimationFrame(frame);
+    }
+    function settle(){
+      const it=items(); if(!it.length)return;
+      const left=it[nearestLeft()].offsetLeft;
+      glideTo(left,Math.min(620,180+Math.abs(left-track.scrollLeft)*.5));
+    }
+    function inertia(v){
+      stopGlide(); stopInertia();
+      if(reduce||Math.abs(v)<.03){settle();return}
+      let last=performance.now();
+      const frame=now=>{
+        const dt=Math.min(now-last,50); last=now;
+        const max=track.scrollWidth-track.clientWidth;
+        let next=track.scrollLeft+v*dt;
+        if(next<=0){next=0;v=0}
+        else if(next>=max){next=max;v=0}
+        track.scrollLeft=next;
+        v*=Math.pow(.93,dt/16.67);
+        if(Math.abs(v)>.02&&next>0&&next<max){inertiaRaf=requestAnimationFrame(frame)}
+        else{inertiaRaf=0;settle()}
+      };
+      inertiaRaf=requestAnimationFrame(frame);
+    }
+    // Índice de destino: permite pulsar "siguiente" varias veces seguidas
+    // aunque el deslizamiento anterior aún esté en curso.
+    let navIdx=-1;
+    const cancelNav=()=>{navIdx=-1};
+    function goTo(i,smooth){
+      const it=items(); if(!it.length)return;
+      i=Math.max(0,Math.min(i,it.length-1));
+      navIdx=i;
+      const left=it[i].offsetLeft;
+      stopInertia();
+      if(reduce||smooth===false){stopGlide();track.scrollLeft=clampLeft(left)}
+      else glideTo(left,Math.min(720,240+Math.abs(left-track.scrollLeft)*.55));
+    }
     function update(){
       const it=items(),n=it.length; if(!n)return;
       const max=track.scrollWidth-track.clientWidth, l=track.scrollLeft;
       const a=l<4?0:(l>=max-4?n-1:centerIdx());
-      it.forEach((f,i)=>{f.classList.toggle('is-active',i===a);const t=f.querySelector('.gal-tag');if(t)t.textContent=pad(i+1)});
+      const c=l+track.clientWidth/2;
+      const parallax=!reduce&&mqWide.matches;
+      it.forEach((f,i)=>{
+        f.classList.toggle('is-active',i===a);
+        if(parallax){
+          const d=(f.offsetLeft+f.offsetWidth/2-c)/(track.clientWidth*.55);
+          f.style.setProperty('--ix',(Math.max(-1,Math.min(1,d))*-15).toFixed(1)+'px');
+        } else { f.style.setProperty('--ix','0px'); }
+      });
       cur.textContent=pad(a+1); tot.textContent='/ '+pad(n);
       prog.style.transform='scaleX('+Math.max(.03,max>0?l/max:1)+')';
     }
@@ -456,9 +708,15 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
 
     function step(dir){
       const it=items(); if(!it.length)return;
-      const max=track.scrollWidth-track.clientWidth, l=track.scrollLeft;
-      if(dir>0){ l>=max-4 ? goTo(0) : goTo(leftIdx()+(Math.abs(it[leftIdx()].offsetLeft-l)<8?1:0)) }
-      else{ l<=4 ? goTo(it.length-1) : goTo(leftIdx()-1) }
+      let base=navIdx;
+      // Si no hay animación en curso y el destino guardado ya no coincide con
+      // la posición real (scroll manual), recalculamos desde el scroll.
+      if(base>=0&&!glideRaf&&!inertiaRaf&&Math.abs(track.scrollLeft-it[base].offsetLeft)>4)base=-1;
+      if(base<0){
+        const max=track.scrollWidth-track.clientWidth, l=track.scrollLeft;
+        base=l<=4?0:(l>=max-4?it.length-1:leftIdx());
+      }
+      goTo((base+dir+it.length)%it.length);
     }
     prevB.addEventListener('click',()=>step(-1)); nextB.addEventListener('click',()=>step(1));
     track.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();step(1)}else if(e.key==='ArrowLeft'){e.preventDefault();step(-1)}});
@@ -478,30 +736,109 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
       if(e.isIntersecting&&!root.classList.contains('in')){root.classList.add('in');setTimeout(()=>root.classList.add('ready'),1600)}
     }),{threshold:.15}).observe(root);
 
-    // Arrastre con mouse (en táctil se usa el scroll nativo)
-    let drag=false,sx=0,sl=0,moved=0;
-    track.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;drag=true;moved=0;sx=e.clientX;sl=track.scrollLeft;track.classList.add('drag')});
-    addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-sx;moved=Math.max(moved,Math.abs(dx));track.scrollLeft=sl-dx});
-    addEventListener('pointerup',()=>{if(!drag)return;drag=false;track.classList.remove('drag');goTo(nearestLeft())});
+    // Arrastre con mouse con inercia propia (en táctil se usa el scroll nativo)
+    let drag=false,sx=0,sl=0,moved=0,vel=0,prevLeft=0,prevT=0;
+    track.addEventListener('pointerdown',e=>{
+      moved=0;cancelNav();
+      if(e.pointerType!=='mouse'||e.button!==0)return;
+      stopGlide();stopInertia();
+      drag=true;sx=e.clientX;sl=track.scrollLeft;vel=0;
+      prevLeft=sl;prevT=performance.now();
+      track.classList.add('drag');
+    });
+    addEventListener('pointermove',e=>{
+      if(!drag)return;
+      if(e.buttons===0){endDrag();return}
+      const now=performance.now();
+      const dx=e.clientX-sx;
+      moved=Math.max(moved,Math.abs(dx));
+      track.scrollLeft=sl-dx;
+      const cur=track.scrollLeft,dt=now-prevT;
+      if(dt>0){
+        const inst=Math.max(-4,Math.min(4,(cur-prevLeft)/dt));
+        vel=vel*.65+inst*.35;
+      }
+      prevLeft=cur;prevT=now;
+    });
+    const endDrag=()=>{
+      if(!drag)return;
+      drag=false;track.classList.remove('drag');
+      // Si soltó el botón sin moverse en los últimos 90 ms, no hay impulso.
+      const fling=performance.now()-prevT<90?vel:0;
+      // Si el clic posterior al arrastre no llega (p. ej. se soltó fuera de la
+      // ventana), liberamos el bloqueo de clic igualmente.
+      setTimeout(()=>{moved=0},350);
+      inertia(fling);
+    };
+    addEventListener('pointerup',endDrag);
+    addEventListener('pointercancel',endDrag);
+    addEventListener('blur',endDrag);
+    track.addEventListener('wheel',()=>{stopGlide();stopInertia();cancelNav()},{passive:true});
+    track.addEventListener('touchstart',()=>{stopGlide();stopInertia();cancelNav()},{passive:true});
     track.addEventListener('click',e=>{if(moved>5){e.preventDefault();e.stopPropagation();moved=0}},true);
 
     // Lightbox
     let li=0;
+    function setLock(on){
+      document.body.classList.toggle('modal-open',on);
+      const lenis=window.__lenis;
+      if(lenis){ on?lenis.stop():lenis.start(); }
+    }
     function show(i){
       const it=items(); if(!it.length)return;
       li=(i+it.length)%it.length;
       const img=it[li].querySelector('img');
       lbImg.src=img.currentSrc||img.src; lbImg.alt=img.alt; lbCount.textContent=pad(li+1)+' / '+pad(it.length);
     }
-    track.addEventListener('click',e=>{const b=e.target.closest('.gal-open');if(!b)return;show(items().indexOf(b.parentElement));lb.showModal()});
+    function openLb(i){ show(i); lb.showModal(); setLock(true); }
+    function closeLb(){
+      if(!lb.open||lb.classList.contains('closing'))return;
+      if(reduce){ lb.close(); return; }
+      lb.classList.add('closing');
+      let finished=false;
+      const done=()=>{ if(finished)return; finished=true; lb.classList.remove('closing'); lb.close(); };
+      lb.addEventListener('animationend',e=>{ if(e.target===lb)done(); },{once:true});
+      setTimeout(done,400);
+    }
+    track.addEventListener('click',e=>{const b=e.target.closest('.gal-open');if(!b)return;openLb(items().indexOf(b.parentElement))});
     document.getElementById('gal-lb-prev').addEventListener('click',()=>show(li-1));
     document.getElementById('gal-lb-next').addEventListener('click',()=>show(li+1));
-    document.getElementById('gal-lb-close').addEventListener('click',()=>lb.close());
-    lb.addEventListener('click',e=>{if(e.target===lb||e.target.id==='gal-lb-stage')lb.close()});
+    document.getElementById('gal-lb-close').addEventListener('click',closeLb);
+    lb.addEventListener('click',e=>{if(e.target===lb||e.target.id==='gal-lb-stage')closeLb()});
+    lb.addEventListener('cancel',e=>{e.preventDefault();closeLb()});
     lb.addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(li+1);else if(e.key==='ArrowLeft')show(li-1)});
     let tx=0; lb.addEventListener('touchstart',e=>{tx=e.changedTouches[0].clientX},{passive:true});
     lb.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)show(li+(dx<0?1:-1))},{passive:true});
-    lb.addEventListener('close',()=>{goTo(li);bump()});
+    lb.addEventListener('close',()=>{setLock(false);goTo(li);bump()});
+
+    // Horario: se amplía dentro de la página (modal), sin abrir otra pestaña.
+    const schOpen=document.getElementById('schedule-open'), schLb=document.getElementById('schedule-lb');
+    if(schOpen&&schLb){
+      const closeSch=()=>{
+        if(!schLb.open||schLb.classList.contains('closing'))return;
+        if(reduce){schLb.close();return}
+        schLb.classList.add('closing');
+        let finished=false;
+        const done=()=>{if(finished)return;finished=true;schLb.classList.remove('closing');schLb.close()};
+        schLb.addEventListener('animationend',e=>{if(e.target===schLb)done()},{once:true});
+        setTimeout(done,400);
+      };
+      schOpen.addEventListener('click',e=>{
+        e.preventDefault();
+        if(schLb.open)return;
+        // Reutiliza la imagen ya cargada en la sección (misma URL, caché).
+        const source=schOpen.querySelector('img'), big=document.getElementById('schedule-lb-img');
+        if(source&&big&&!big.getAttribute('src'))big.src=source.currentSrc||source.src;
+        schLb.showModal(); setLock(true);
+      });
+      document.getElementById('schedule-lb-close').addEventListener('click',closeSch);
+      schLb.addEventListener('click',e=>{
+        if(e.target===schLb.querySelector('img')||e.target.closest('#schedule-lb-close'))return;
+        closeSch();
+      });
+      schLb.addEventListener('cancel',e=>{e.preventDefault();closeSch()});
+      schLb.addEventListener('close',()=>setLock(false));
+    }
 
     update();
   })();
@@ -510,15 +847,289 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
   // Modales legales: abren desde el footer, cierran con ✕, botón, clic fuera o Esc.
   (function(){
     const modals=document.querySelectorAll('.legal-modal');
+    const setLock=on=>{
+      const l=window.__lenis;
+      if(l){ on?l.stop():l.start(); }
+    };
     document.querySelectorAll('[data-legal]').forEach(b=>b.addEventListener('click',()=>{
       const m=document.getElementById(b.dataset.legal); if(!m||m.open)return;
-      m.showModal(); document.body.classList.add('modal-open'); m.querySelector('.legal-body').scrollTop=0;
+      m.showModal(); document.body.classList.add('modal-open'); setLock(true); m.querySelector('.legal-body').scrollTop=0;
     }));
     modals.forEach(m=>{
       m.querySelectorAll('[data-close]').forEach(c=>c.addEventListener('click',()=>m.close()));
       m.addEventListener('click',e=>{if(e.target===m)m.close()});
-      m.addEventListener('close',()=>{if(!document.querySelector('.legal-modal[open]'))document.body.classList.remove('modal-open')});
+      m.addEventListener('close',()=>{if(!document.querySelector('.legal-modal[open]')){document.body.classList.remove('modal-open');setLock(false)}});
     });
+  })();
+  </script>
+  <script>
+  // =====================================================================
+  // Mejoras progresivas: títulos por línea, cortina, reveal, header,
+  // parallax, cursor, botones magnéticos y scroll con inercia (Lenis).
+  // =====================================================================
+  (function(){
+    const reduceQuery=matchMedia('(prefers-reduced-motion: reduce)');
+    const fineHover=matchMedia('(hover:hover) and (pointer:fine)').matches;
+    const reduce=()=>reduceQuery.matches;
+
+    // ---------- Títulos revelados por línea ----------
+    function splitLines(el){
+      if(!el||el.dataset.lines==='done')return;
+      const frag=document.createDocumentFragment();
+      let line=document.createElement('span'); line.className='line';
+      let inner=document.createElement('span'); line.appendChild(inner);
+      Array.from(el.childNodes).forEach(node=>{
+        if(node.nodeType===1&&node.tagName==='BR'){
+          frag.appendChild(line);
+          line=document.createElement('span'); line.className='line';
+          inner=document.createElement('span'); line.appendChild(inner);
+        } else {
+          inner.appendChild(node.cloneNode(true));
+        }
+      });
+      if(inner.childNodes.length)frag.appendChild(line);
+      el.replaceChildren(frag);
+      el.classList.add('lines');
+      el.dataset.lines='done';
+      el.querySelectorAll(':scope > .line').forEach((l,i)=>l.style.setProperty('--i',i));
+    }
+    document.querySelectorAll('.section-title,.booking-section h2').forEach(splitLines);
+    const heroTitle=document.querySelector('.hero h1');
+    if(heroTitle)splitLines(heroTitle);
+
+    // ---------- Línea roja superior de cada sección ----------
+    const sections=Array.from(document.querySelectorAll('main > section'));
+    sections.forEach(s=>{
+      const line=document.createElement('span');
+      line.className='section-line';
+      line.setAttribute('aria-hidden','true');
+      s.prepend(line);
+    });
+
+    // ---------- Cortina: solo se apilan las secciones que caben en pantalla ----------
+    const stackMq=matchMedia('(min-width:700px)');
+    function syncStack(){
+      const canStack=stackMq.matches&&!reduce();
+      sections.forEach(s=>{
+        const fits=canStack&&s!==document.querySelector('.hero')&&s.offsetHeight<=innerHeight-1;
+        s.classList.toggle('stackable',fits);
+      });
+      measureSpy();
+    }
+    window.__syncStack=syncStack;
+
+    // ---------- Reveal + stagger ----------
+    function initStagger(scope){
+      document.querySelectorAll('[data-stagger]').forEach(c=>{
+        if(scope&&!scope.contains(c))return;
+        Array.from(c.children).forEach((ch,i)=>ch.style.setProperty('--i',i));
+      });
+    }
+    initStagger();
+
+    const revealEls=document.querySelectorAll('.gallery-head,.section-heading,.faq-layout>div,.plan-panel,.faq-list,.booking-layout>div,.booking-form,.location-copy,.map-wrap');
+    const titles=document.querySelectorAll('.section-title,.booking-section h2');
+    const clipSections=document.querySelectorAll('.schedule-section');
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target)}
+      }),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+      revealEls.forEach(el=>{el.classList.add('reveal');io.observe(el)});
+
+      const lineIo=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(entry.isIntersecting){entry.target.classList.add('lines-in');lineIo.unobserve(entry.target)}
+      }),{threshold:.2});
+      titles.forEach(el=>lineIo.observe(el));
+
+      // Se observa la sección, no la figura: su propio clip-path la dejaría con ratio 0.
+      const clipIo=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const media=entry.target.querySelector('.schedule-media');
+          if(media)media.classList.add('visible');
+          clipIo.unobserve(entry.target);
+        }
+      }),{threshold:.12});
+      clipSections.forEach(el=>clipIo.observe(el));
+
+      const sectionIo=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(entry.isIntersecting){entry.target.classList.add('section-in');sectionIo.unobserve(entry.target)}
+      }),{threshold:.04});
+      sections.forEach(s=>sectionIo.observe(s));
+    } else {
+      revealEls.forEach(el=>el.classList.add('reveal','visible'));
+      titles.forEach(el=>el.classList.add('lines-in'));
+      clipSections.forEach(s=>{const m=s.querySelector('.schedule-media');if(m)m.classList.add('visible')});
+      sections.forEach(s=>s.classList.add('section-in'));
+    }
+
+    // ---------- Barra móvil: aparece al salir del hero ----------
+    const mobileBar=document.querySelector('.mobile-bottom');
+    const heroSection=document.querySelector('.hero');
+    if(mobileBar&&heroSection){
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(([entry])=>{
+          mobileBar.classList.toggle('show',!entry.isIntersecting);
+        },{threshold:0}).observe(heroSection);
+      } else {
+        mobileBar.classList.add('show');
+      }
+    }
+
+    // ---------- FAQ: apertura y cierre con grid-template-rows ----------
+    document.querySelectorAll('.faq-list details').forEach(d=>{
+      const p=d.querySelector('p'); const summary=d.querySelector('summary');
+      if(!p||!summary)return;
+      const body=document.createElement('div'); body.className='faq-body';
+      const inner=document.createElement('div');
+      d.insertBefore(body,p); body.appendChild(inner); inner.appendChild(p);
+      summary.addEventListener('click',e=>{
+        e.preventDefault();
+        if(d.classList.contains('closing'))return;
+        if(d.open){
+          if(reduce()){ d.open=false; return; }
+          d.classList.add('closing');
+          let finished=false;
+          const done=()=>{if(finished)return;finished=true;d.open=false;d.classList.remove('closing')};
+          body.addEventListener('transitionend',e=>{ if(e.target===body&&e.propertyName==='grid-template-rows')done(); });
+          setTimeout(done,500);
+        } else {
+          d.open=true;
+        }
+      });
+    });
+
+    // ---------- Header: compacto + scroll-spy ----------
+    const header=document.querySelector('.site-header');
+    const navLinks=Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+    const spy=navLinks.map(a=>({a,el:document.querySelector(a.getAttribute('href'))})).filter(x=>x.el);
+    let spyTops=[], ticking=false;
+    function measureSpy(){ spyTops=spy.map(x=>x.el.offsetTop); }
+    function onScroll(){
+      ticking=false;
+      if(header)header.classList.toggle('scrolled',scrollY>22);
+      const y=scrollY+(header?header.offsetHeight:70)+40;
+      let active=-1;
+      spyTops.forEach((t,i)=>{if(y>=t)active=i});
+      if(scrollY+innerHeight>=document.documentElement.scrollHeight-2)active=spy.length-1;
+      spy.forEach((x,i)=>x.a.classList.toggle('is-current',i===active));
+    }
+    function requestScroll(){ if(!ticking){ticking=true;requestAnimationFrame(onScroll)} }
+    addEventListener('scroll',requestScroll,{passive:true});
+    addEventListener('resize',()=>{measureSpy();syncStack();requestScroll()},{passive:true});
+    measureSpy(); onScroll();
+
+    // ---------- Parallax del "BJJ" gigante ----------
+    const hero=document.querySelector('.hero');
+    if(hero&&!reduce()){
+      let raf=0, heroH=hero.offsetHeight||1;
+      const measure=()=>{ heroH=hero.offsetHeight||1 };
+      const move=()=>{
+        raf=0;
+        if(scrollY>innerHeight*1.5)return;
+        hero.style.setProperty('--bjj-y',(Math.min(scrollY,heroH)*.16).toFixed(1)+'px');
+      };
+      addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(move)},{passive:true});
+      addEventListener('resize',measure,{passive:true});
+      move();
+    }
+
+    // ---------- Botones magnéticos ----------
+    if(fineHover&&!reduce()){
+      document.querySelectorAll('.nav .btn,.hero-actions .btn,.plan-panel .btn,.booking-form .btn,.mobile-bottom .btn').forEach(btn=>{
+        btn.classList.add('magnet');
+        btn.addEventListener('pointermove',e=>{
+          const r=btn.getBoundingClientRect();
+          const dx=(e.clientX-(r.left+r.width/2))/Math.max(r.width/2,1);
+          const dy=(e.clientY-(r.top+r.height/2))/Math.max(r.height/2,1);
+          btn.style.setProperty('--bx',(dx*6).toFixed(1)+'px');
+          btn.style.setProperty('--by',(dy*5).toFixed(1)+'px');
+        });
+        const reset=()=>{btn.style.setProperty('--bx','0px');btn.style.setProperty('--by','0px')};
+        btn.addEventListener('pointerleave',reset);
+        btn.addEventListener('blur',reset);
+      });
+    }
+
+    // ---------- Cursor personalizado ----------
+    if(fineHover&&!reduce()){
+      const dot=document.createElement('div');
+      dot.className='cursor-dot';
+      dot.setAttribute('aria-hidden','true');
+      dot.dataset.label='Arrastra';
+      document.body.appendChild(dot);
+      let tx=-100,ty=-100,cx=-100,cy=-100,active=false,rafId=0;
+      let onGallery=false,dragHintTimer=0,dragHintShown=false;
+      const paint=()=>{
+        rafId=0;
+        cx+=(tx-cx)*.22; cy+=(ty-cy)*.22;
+        dot.style.setProperty('--cx',cx.toFixed(1)+'px');
+        dot.style.setProperty('--cy',cy.toFixed(1)+'px');
+        if(active)rafId=requestAnimationFrame(paint);
+      };
+      const start=()=>{ if(!active){active=true;document.body.classList.add('has-cursor');if(!rafId)rafId=requestAnimationFrame(paint)} };
+      const stop=()=>{
+        active=false; document.body.classList.remove('has-cursor');
+        if(rafId){cancelAnimationFrame(rafId);rafId=0}
+        clearTimeout(dragHintTimer); onGallery=false; dot.classList.remove('is-drag');
+      };
+      addEventListener('pointermove',e=>{
+        if(e.pointerType&&e.pointerType!=='mouse')return;
+        tx=e.clientX; ty=e.clientY; start();
+        const overGallery=!!e.target.closest('.gal-track');
+        const onCanvas=!!e.target.closest('.hero-canvas');
+        // Pista "Arrastra": se muestra una sola vez y se desvanece sola.
+        if(overGallery){
+          if(!onGallery){
+            onGallery=true;
+            if(!dragHintShown){
+              dot.classList.add('is-drag');
+              clearTimeout(dragHintTimer);
+              dragHintTimer=setTimeout(()=>{
+                dragHintShown=true;
+                dot.classList.remove('is-drag');
+              },1300);
+            }
+          }
+        } else if(onGallery){
+          onGallery=false;
+          clearTimeout(dragHintTimer);
+          dot.classList.remove('is-drag');
+        }
+        dot.classList.toggle('is-grow',onCanvas||(!overGallery&&!!e.target.closest('a,button,summary')));
+      },{passive:true});
+      document.addEventListener('pointerleave',stop,{passive:true});
+      addEventListener('blur',stop);
+    }
+
+    // ---------- Lenis: scroll con inercia ----------
+    function initLenis(){
+      if(!window.Lenis||reduce())return;
+      const lenis=new Lenis({lerp:.09,wheelMultiplier:1,touchMultiplier:1.6,smoothWheel:true,syncTouch:false});
+      window.__lenis=lenis;
+      const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)};
+      requestAnimationFrame(raf);
+      document.addEventListener('click',e=>{
+        const a=e.target.closest('a[href^="#"]');
+        if(!a)return;
+        const id=a.getAttribute('href');
+        if(!id||id.length<2)return;
+        const target=document.getElementById(id.slice(1));
+        if(!target)return;
+        e.preventDefault();
+        // Lenis ya descuenta el scroll-padding-top del documento: no sumamos offset propio.
+        lenis.scrollTo(target,{duration:1.15});
+        if(history.pushState)history.pushState(null,'',id);
+        target.setAttribute('tabindex','-1');
+        target.focus({preventScroll:true});
+      },false);
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initLenis,{once:true});
+    else initLenis();
+
+    // Recalcular la cortina cuando cambian las fuentes o el layout.
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(syncStack);
+    addEventListener('load',syncStack,{once:true});
+    setTimeout(syncStack,1200);
   })();
   </script>
 </body>

@@ -339,6 +339,11 @@
 
     /* ===== Cambio de plan: View Transition ===== */
     .plan-panel{view-transition-name:plan-card}
+    /* La barra fija también se captura (grupo propio) para que la tarjeta no la
+       tape: los snapshots de la transición van en la top layer. Al estar al final
+       del documento, su grupo pinta por encima del de la tarjeta. */
+    .mobile-bottom{view-transition-name:mobile-cta}
+    ::view-transition-group(mobile-cta),::view-transition-old(mobile-cta),::view-transition-new(mobile-cta){animation:none}
     ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
     ::view-transition-old(plan-card){animation:vtOut .3s var(--ease) both}
     ::view-transition-new(plan-card){animation:vtIn .35s var(--ease) both}

@@ -53,6 +53,14 @@
       "latitude": -33.4569,
       "longitude": -70.5992
     },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "20:00", "closes": "21:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "19:30", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "20:00", "closes": "21:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "19:30", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "20:00", "closes": "21:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:30", "closes": "12:00" }
+    ],
     "areaServed": ["Ñuñoa", "Santiago de Chile", "Providencia", "Las Condes"],
     "description": "Randori Dojo es una academia de Jiu-Jitsu Brasileño y Grappling en Ñuñoa, Santiago de Chile. Ofrecemos clases de jiu jitsu, grappling, open mat, entrenamiento de jiu jitsu con gi y sin gi, artes marciales, deportes de combate y defensa personal para adultos, desde principiantes hasta nivel avanzado.",
     "sameAs": [
@@ -149,6 +157,9 @@
       .hero-canvas{grid-column:2;grid-row:1;order:0;height:100%;min-height:660px}
     }
     @media(max-width:999px){ .hero:after{display:none} }
+    .reviews-section{padding:74px 0 82px;background:#0d0d0d}.reviews-grid{display:grid;gap:14px;grid-template-columns:1fr}.review{margin:0;padding:22px 20px;background:#171717;border:1px solid #2c2c2c;display:flex;flex-direction:column;gap:14px}.review .stars{color:var(--red);letter-spacing:.18em;font-size:14px}.review blockquote{margin:0;flex:1}.review blockquote p{margin:0;color:#d6d6d6;font-size:14px;line-height:1.6}.review figcaption strong{display:block;font:700 18px/1.1 var(--display);letter-spacing:.03em;text-transform:uppercase}.review figcaption span{display:block;margin-top:3px;color:#8d8d8d;font-size:11px}.reviews-more{margin:26px 0 0}
+    @media(min-width:700px){.reviews-section{padding-top:96px;padding-bottom:100px}.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1000px){.reviews-grid{grid-template-columns:repeat(3,1fr)}}
     .proof-strip{background:var(--paper);color:var(--ink);padding:16px 0}.proof-inner{display:flex;align-items:center;gap:13px}.proof-symbol{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #bbb;font:800 19px var(--display)}.proof-inner p{margin:0;font-size:12px;font-weight:700}.proof-inner span{color:#666;font-weight:500}
     .gallery-section{padding:70px 0 76px;background:#f4f4f2;color:#111}.gallery-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:24px}.gallery-head .copy{color:#666;margin:0;max-width:340px;font-size:12px}
 
@@ -201,7 +212,7 @@
     @media(prefers-reduced-motion:reduce){.gal-item{opacity:1;transform:none}.gal-open img{transition:none}}
 
     .schedule-section{padding:74px 0 82px;background:#111}.section-heading{display:flex;flex-direction:column;gap:12px;margin-bottom:26px}.section-heading .copy{margin:0;font-size:13px}.schedule-tabs,.plan-tabs{display:flex;gap:0;border-bottom:1px solid #4a4a4a;overflow-x:auto;scrollbar-width:none}.schedule-tabs button,.plan-tabs button{flex:1;min-width:max-content;min-height:47px;padding:0 15px;border:0;border-bottom:3px solid transparent;background:transparent;color:#999;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.schedule-tabs button[aria-selected=true],.plan-tabs button[aria-selected=true]{color:#fff;border-color:var(--red)}
-    .schedule-media{margin:0}.schedule-media a{position:relative;display:block;overflow:hidden;border:1px solid #2f2f2f;background:#1a1a1a}.schedule-media img{width:100%;height:auto;aspect-ratio:2576/1522;transition:transform .6s cubic-bezier(.2,.7,.2,1)}.schedule-zoom{position:absolute;right:0;top:0;background:var(--red);color:#fff;padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.schedule-hint{margin:12px 0 0;color:#888;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}@media(hover:hover){.schedule-media a:hover img{transform:scale(1.015)}}
+        .schedule-media{margin:0}.schedule-media a{position:relative;display:block;overflow:hidden;border:1px solid #2f2f2f;background:#1a1a1a}.schedule-media img{width:100%;height:auto;aspect-ratio:2576/1522;transition:transform .6s cubic-bezier(.2,.7,.2,1)}.schedule-zoom{position:absolute;right:0;top:0;background:var(--red);color:#fff;padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.schedule-hint{margin:12px 0 0;color:#888;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}@media(hover:hover){.schedule-media a:hover img{transform:scale(1.015)}}
     .pricing-section{padding:76px 0 82px;background:#e9e9e7;color:#111}.pricing-section .eyebrow{color:#555}.pricing-section .section-heading .copy{color:#555}.plan-tabs{border-color:#b9b9b6}.plan-tabs button{color:#777}.plan-tabs button[aria-selected=true]{color:#111;border-color:var(--red)}.plan-panel{position:relative;margin-top:22px;background:#fff;padding:23px 20px 21px;border:1px solid #d1d1ce}.popular-tag{position:absolute;right:0;top:0;background:var(--red);color:#fff;padding:8px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.plan-name{font:800 45px/.9 var(--display);text-transform:uppercase;margin:4px 0}.plan-price{font-size:13px;color:#666;margin:9px 0 21px}.plan-price strong{display:block;color:#111;font:700 22px/1.3 var(--body)}.benefit-list{padding:0;margin:0 0 24px;list-style:none;display:grid;gap:12px}.benefit-list li{display:flex;align-items:flex-start;gap:10px;font-size:12px}.check{color:var(--red);font-weight:900}.plan-panel .btn{width:100%}.plan-caption{font-size:10px;color:#777;margin:13px 0 0}
     .faq-section{padding:76px 0 82px;background:#fff;color:#111}.faq-layout{display:grid;gap:25px}.faq-layout .copy{color:#686868;font-size:13px}.faq-list{border-top:1px solid #ccc}.faq-list details{border-bottom:1px solid #ccc}.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:15px;align-items:center;padding:19px 0;font:700 17px/1.2 var(--display);text-transform:uppercase}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:'+';font:500 24px/1 var(--body);color:var(--red)}.faq-list details[open] summary:after{content:'−'}.faq-list details p{margin:0;padding:0 30px 19px 0;max-width:65ch;color:#666;font-size:12px}
     .booking-section{padding:72px 0 82px;background:var(--red)}.booking-layout{display:grid;gap:26px}.booking-section .eyebrow{color:#ffe2e5}.booking-section .eyebrow:before{background:#fff}.booking-section h2{font-size:clamp(49px,10vw,92px);max-width:9ch;margin:15px 0}.booking-section .copy{color:#ffe4e7;font-size:13px}.booking-form{display:grid;gap:12px;background:#fff;padding:19px;color:#111}.field{display:grid;gap:6px}.field label{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.field input,.field select{width:100%;min-height:46px;border:1px solid #ccc;background:#fff;padding:0 11px;color:#111;font-size:12px}.field input::placeholder{color:#888}.booking-form .btn{width:100%;background:#111}.booking-form .btn:hover{background:#333}.form-note{margin:0;color:#666;font-size:10px}.form-status{min-height:18px;margin:0;color:#111;font-size:11px;font-weight:700}
@@ -240,15 +251,9 @@
        ===================================================================== */
     :root{--ease:cubic-bezier(.2,.7,.2,1);--header-h:76px}
     html{scrollbar-gutter:stable}
-    /* Lenis (scroll con inercia) */
-    html.lenis,html.lenis body{height:auto}
-    html.lenis{scroll-behavior:auto!important}
-    .lenis.lenis-smooth{scroll-behavior:auto!important}
-    .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
-    .lenis.lenis-stopped{overflow:hidden}
-
+    
     /* Intro: espera fuentes + modelo; el temporizador CSS es solo respaldo sin JS */
-    .intro-mark{animation:introOut .6s cubic-bezier(.7,0,.2,1) 4.5s forwards;transition:opacity .5s var(--ease)}
+    .intro-mark{animation:introOut .5s cubic-bezier(.7,0,.2,1) 1.4s forwards;transition:opacity .5s var(--ease)}
     .intro-mark.is-done{animation:introOutNow .65s cubic-bezier(.7,0,.2,1) forwards}
     @keyframes introOutNow{to{opacity:0;visibility:hidden}}
 
@@ -256,6 +261,7 @@
     main>section{position:relative}
     .section-line{position:absolute;left:0;top:0;z-index:3;width:100%;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .12s;pointer-events:none}
     main>section.section-in>.section-line{transform:scaleX(1)}
+    
     @media(min-width:700px) and (prefers-reduced-motion:no-preference){
       main>section.stackable:not(.hero){position:sticky;top:0;box-shadow:0 -22px 46px -26px rgba(0,0,0,.55)}
     }
@@ -284,7 +290,7 @@
     .btn{position:relative;isolation:isolate;overflow:hidden;transition:background .18s,border-color .18s,transform .22s var(--ease)}
     .btn:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(255,255,255,.2),rgba(255,255,255,.03));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
     .btn:hover:before,.btn:focus-visible:before{transform:scaleX(1)}
-    .btn:hover{transform:translate3d(var(--bx,0px),calc(var(--by,0px) - 2px),0)}
+    .btn:hover{transform:translate3d(var(--bx,0px),calc(var(--by,0px) - 1px),0)}
     .btn:active{transform:translate3d(var(--bx,0px),calc(var(--by,0px) + 1px),0) scale(.99)}
     .btn .arrow{position:relative;z-index:1;transition:transform .3s var(--ease)}
     .btn:hover .arrow{transform:translate(3px,-3px)}
@@ -350,18 +356,7 @@
     @keyframes vtOut{to{opacity:0;transform:translate3d(0,4px,0)}}
     @keyframes vtIn{from{opacity:0;transform:translate3d(0,-4px,0)}}
 
-    /* ===== Cursor personalizado (solo puntero fino con hover) ===== */
-    .cursor-dot{position:fixed;left:0;top:0;z-index:9997;width:9px;height:9px;border-radius:50%;background:var(--red);pointer-events:none;opacity:0;transform:translate3d(var(--cx,-100px),var(--cy,-100px),0) translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .25s,border-color .25s,box-shadow .25s,opacity .2s;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
-    body.has-cursor .cursor-dot{opacity:1}
-    .cursor-dot:after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:800 10px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;opacity:0;transition:opacity .2s}
-    .cursor-dot.is-grow{width:34px;height:34px;background:transparent;border:1px solid rgba(214,0,28,.95);box-shadow:none}
-    .cursor-dot.is-drag{width:72px;height:72px;background:var(--red);border:0;box-shadow:0 0 0 5px rgba(214,0,28,.14)}
-    .cursor-dot.is-drag:after{opacity:1;font-size:9px;letter-spacing:.09em}
-    body.has-cursor a,body.has-cursor button,body.has-cursor summary,body.has-cursor .gal-track,body.has-cursor .hero-canvas{cursor:none}
-    /* Dentro de un dialog (top layer) el punto quedaría debajo: devolvemos el cursor nativo. */
-    body.modal-open a,body.modal-open button,body.modal-open summary,body.modal-open .gal-track{cursor:auto}
-    body.modal-open .cursor-dot{opacity:0}
-    body.modal-open{overflow:hidden}
+    
 
     /* ===== Táctil: sin hover pegajoso ni barridos ===== */
     @media(hover:none){
@@ -383,8 +378,7 @@
       body.hero-in .hero-canvas{animation:none;opacity:1;transform:none}
       .hero:after{transform:none}
       .schedule-media{clip-path:none}
-      .cursor-dot{display:none}
-      .gal-open img{opacity:1;transform:none}
+            .gal-open img{opacity:1;transform:none}
       .gal-open:before{display:none}
       .faq-body{transition:none}
       .intro-mark,.intro-mark.is-done{animation-duration:.01ms!important}
@@ -397,14 +391,13 @@
     .hero .eyebrow,.hero .copy,.hero .hero-actions,.hero .quick-links{opacity:1;transform:none}
     .hero-canvas{opacity:1;animation:none}
     .reveal{opacity:1;transform:none}
-    .cursor-dot{display:none}
-    .mobile-bottom{transform:none;opacity:1;visibility:visible}
+        .mobile-bottom{transform:none;opacity:1;visibility:visible}
   </style></noscript>
   <div class="intro-mark" aria-hidden="true"><img src="assets/logorandori.jpeg" alt="" class="intro-logo"></div>
   <header class="site-header">
     <nav class="nav wrap" aria-label="Navegación principal">
       <a class="brand" href="#inicio" aria-label="Randori BJJ, inicio"><img src="assets/logorandori.jpeg" alt="Logo de Randori BJJ"><span class="brand-word">Randori<small>Jiu-Jitsu Brasileño · Grappling</small></span></a>
-      <div class="nav-links"><a href="#horarios">Horarios</a><a href="#planes">Planes</a><a href="#ubicacion">Ubicación</a></div>
+      <div class="nav-links"><a href="#horarios">Horarios</a><a href="#planes">Planes</a><a href="#opiniones">Opiniones</a><a href="#ubicacion">Ubicación</a></div>
       <a class="btn" href="#reserva">Clase Gratis <span class="arrow">↗</span></a>
     </nav>
   </header>
@@ -465,7 +458,14 @@
       <div class="wrap">
         <div class="section-heading"><div class="eyebrow">Elige tu plan</div><h2 class="section-title">Planes</h2><p class="copy">Dos opciones con acceso completo a todos los horarios de Grappling y Jiu-Jitsu Brasileño.</p></div>
         <div class="plan-tabs" role="tablist" aria-label="Planes disponibles"><button type="button" data-plan="mensual" aria-selected="true">Plan Mensual</button><button type="button" data-plan="trimestral" aria-selected="false">Plan Trimestral</button></div>
-<article class="plan-panel" id="plan-panel" aria-live="polite"><div class="eyebrow">Membresía Randori</div><h3 class="plan-name" id="plan-name">Plan Mensual</h3><p class="plan-price"><strong id="plan-price">$50.990 / mes</strong><span id="plan-price-note">Matrícula única de $10.000.</span></p><ul class="benefit-list" id="plan-benefits" data-stagger><li><span class="check">✓</span> Acceso a todos los horarios</li><li><span class="check">✓</span> Grappling (lunes, miércoles y viernes)</li><li><span class="check">✓</span> Jiu-Jitsu Brasileño con gi (martes y jueves)</li><li><span class="check">✓</span> Acompañamiento del equipo</li></ul><a class="btn btn-dark" id="plan-cta" href="#reserva">Consultar por WhatsApp <span class="arrow">↗</span></a><p class="plan-caption" id="plan-caption">El valor mensual incluye todos los horarios. La matrícula de $10.000 se paga una sola vez.</p></article>
+<article class="plan-panel" id="plan-panel" aria-live="polite"><div class="eyebrow">Membresía Randori</div><h3 class="plan-name" id="plan-name">Plan Mensual</h3><p class="plan-price"><strong id="plan-price">$50.990 / mes</strong><span id="plan-price-note">Matrícula única de $10.000.</span></p><ul class="benefit-list" id="plan-benefits" data-stagger><li><span class="check">✓</span> Acceso a todos los horarios</li><li><span class="check">✓</span> Grappling (lunes, miércoles y jueves)</li><li><span class="check">✓</span> Jiu-Jitsu Brasileño con gi (martes y viernes)</li><li><span class="check">✓</span> Acompañamiento del equipo</li></ul><a class="btn btn-dark" id="plan-cta" href="#reserva">Consultar por WhatsApp <span class="arrow">↗</span></a><p class="plan-caption" id="plan-caption">El valor mensual incluye todos los horarios. La matrícula de $10.000 se paga una sola vez.</p></article>
+      </div>
+    </section>
+    <section class="reviews-section" id="opiniones">
+      <div class="wrap">
+        <div class="section-heading"><div class="eyebrow">Lo que dicen los alumnos</div><h2 class="section-title">Opiniones<br>reales.</h2><p class="copy">Reseñas públicas de Google Maps, de principiantes y de gente con años en el tatami.</p></div>
+        <div class="reviews-grid" data-stagger><figure class="review"><div class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div><blockquote><p>“Excelente ambiente y buenos entrenamientos, mi experiencia ha sido realmente grata ya que al ser al inicio un ambiente de solo hombres han tenido la paciencia de entrenarme desde lo más básico siempre con respeto, considerando mis limites y con demasiada paciencia, recomiendo 100%”</p></blockquote><figcaption><strong>Francisca Zuñiga</strong><span>Reseña en Google Maps · empezó desde cero</span></figcaption></figure><figure class="review"><div class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div><blockquote><p>“Tuve mi primera clase en este dojo y fue increíble, el ambiente es muy amigable, todos dispuestos a enseñar…”</p></blockquote><figcaption><strong>Catalina Marino</strong><span>Reseña en Google Maps · primera clase</span></figcaption></figure><figure class="review"><div class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div><blockquote><p>“Excelente academia, espacio amplio. Muy técnicos en la enseñanza. Se adaptan a la enseñanza desde el inicio a los más avanzados. La recomiendo 100%.”</p></blockquote><figcaption><strong>Felipe Saldaña</strong><span>Reseña en Google Maps</span></figcaption></figure><figure class="review"><div class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div><blockquote><p>“Gente súper amistosa, la sala es bastante amplia y las clases son estructuradas, siempre enfocadas en algo específico, para quien quiera competir también es excelente y son varios los que siguen ese camino.”</p></blockquote><figcaption><strong>Pavel Nikiforov</strong><span>Reseña en Google Maps</span></figcaption></figure><figure class="review"><div class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div><blockquote><p>“Cumplo tres años haciendo Jiu Jitsu en Randori Ñuñoa. Durante este tiempo, he enfrentado grandes desafíos que, guiados por la maestría de nuestros senseis, se han convertido en valiosas lecciones.”</p></blockquote><figcaption><strong>Ramón Alejandro Riveros Reyes</strong><span>Reseña en Google Maps · 3 años entrenando</span></figcaption></figure><figure class="review"><div class="stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div><blockquote><p>“Un lugar muy agradable para entrenar, buena onda y consideración por los demás. Equipo técnico y de buen nivel”</p></blockquote><figcaption><strong>Alexandra Lobos</strong><span>Reseña en Google Maps</span></figcaption></figure></div>
+        <p class="reviews-more"><a class="btn btn-secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Randori+Dojo+Av.+Presidente+Jos%C3%A9+Batlle+y+Ord%C3%B3%C3%B1ez+3796+%C3%91u%C3%B1oa" target="_blank" rel="noopener">Ver todas las opiniones en Google Maps <span class="arrow">↗</span></a></p>
       </div>
     </section>
     <section class="faq-section" id="preguntas">
@@ -493,8 +493,8 @@
     </section>
     <section class="location-section" id="ubicacion">
       <div class="wrap location-layout">
-        <div class="location-copy"><div class="eyebrow">Ven a conocernos</div><h2 class="section-title">Nos vemos<br>en el tatami.</h2><p class="copy">Encuentra el dojo y coordina tu visita con nosotros.</p><div class="address-block"><span class="address-pin" aria-hidden="true">⌖</span><div><strong>Randori Dojo</strong><span>Jiu-Jitsu Brasileño y Grappling · Ñuñoa, Santiago de Chile</span></div></div><div class="location-actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Randori+Dojo+%C3%91u%C3%B1oa+Santiago" target="_blank" rel="noopener">Abrir en Google Maps <span class="arrow">↗</span></a><a class="btn btn-secondary" href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram <span class="arrow">↗</span></a></div></div>
-        <div class="map-wrap"><iframe class="map-frame" title="Ubicación de Randori Dojo en Google Maps" loading="lazy" src="https://www.google.com/maps?q=Randori+Dojo+%C3%91u%C3%B1oa+Santiago&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <div class="location-copy"><div class="eyebrow">Ven a conocernos</div><h2 class="section-title">Nos vemos<br>en el tatami.</h2><p class="copy">Estamos en Ñuñoa, cerca del Parque Juan XXIII. Coordina tu visita con nosotros.</p><div class="address-block"><span class="address-pin" aria-hidden="true">⌖</span><div><strong>Av. Presidente José Batlle y Ordóñez 3796</strong><span>Ñuñoa, Santiago de Chile</span><span>A unos 10 min a pie del Metro Villa Frei</span></div></div><div class="location-actions"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Randori+Dojo+Av.+Presidente+Jos%C3%A9+Batlle+y+Ord%C3%B3%C3%B1ez+3796+%C3%91u%C3%B1oa" target="_blank" rel="noopener">Abrir en Google Maps <span class="arrow">↗</span></a><a class="btn btn-secondary" href="https://www.instagram.com/randori.bjj/" target="_blank" rel="noopener">Instagram <span class="arrow">↗</span></a></div></div>
+        <div class="map-wrap"><iframe class="map-frame" title="Ubicación de Randori Dojo en Google Maps" loading="lazy" src="https://www.google.com/maps?q=Randori+Dojo+Av.+Presidente+Jos%C3%A9+Batlle+y+Ord%C3%B3%C3%B1ez+3796+%C3%91u%C3%B1oa&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
       </div>
     </section>
   </main>
@@ -550,24 +550,22 @@
   </dialog>
   <div class="mobile-bottom"><a class="btn" href="#reserva">Agendar clase gratis <span class="arrow">↗</span></a></div>
   <script>
-    // Preloader real: el intro se retira cuando las fuentes y el modelo 3D están listos.
-    // El temporizador de 5 s es solo una red de seguridad (red lenta, WebGL no disponible, etc.).
+    // Preloader breve: solo espera las fuentes (máx. 700 ms). El modelo 3D carga en segundo plano
+    // y aparece solo cuando está listo; nunca bloquea la página.
     (function(){
       const intro=document.querySelector('.intro-mark'); if(!intro) return;
-      let fontsReady=false, modelReady=false, done=false;
+      let done=false;
       const finish=function(){
         if(done) return; done=true;
         intro.classList.add('is-done');
         document.body.classList.add('hero-in');
         setTimeout(function(){ intro.remove(); }, 800);
       };
-      const maybe=function(){ if(fontsReady && modelReady) finish(); };
-      (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ fontsReady=true; maybe(); });
-      window.addEventListener('randori:ready', function(){ modelReady=true; maybe(); }, {once:true});
-      setTimeout(finish, 5000);
+      const fonts=(document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+      Promise.race([fonts, new Promise(function(r){ setTimeout(r,700); })]).then(finish);
+      setTimeout(finish, 1200);
     })();
   </script>
-  <script defer src="vendor/lenis/lenis.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
@@ -932,7 +930,7 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
     }
     initStagger();
 
-    const revealEls=document.querySelectorAll('.gallery-head,.section-heading,.faq-layout>div,.plan-panel,.faq-list,.booking-layout>div,.booking-form,.location-copy,.map-wrap');
+    const revealEls=document.querySelectorAll('.reviews-grid,.gallery-head,.section-heading,.faq-layout>div,.plan-panel,.faq-list,.booking-layout>div,.booking-form,.location-copy,.map-wrap');
     const titles=document.querySelectorAll('.section-title,.booking-section h2');
     const clipSections=document.querySelectorAll('.schedule-section');
     if('IntersectionObserver' in window){
@@ -1023,6 +1021,23 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
     addEventListener('resize',()=>{measureSpy();syncStack();requestScroll()},{passive:true});
     measureSpy(); onScroll();
 
+    // ---------- Botones magnéticos (versión liviana: poco recorrido, solo con mouse) ----------
+    if(fineHover&&!reduce()){
+      document.querySelectorAll('.nav .btn,.hero-actions .btn,.plan-panel .btn,.booking-form .btn,.mobile-bottom .btn').forEach(btn=>{
+        btn.addEventListener('pointermove',e=>{
+          if(e.pointerType&&e.pointerType!=='mouse')return;
+          const r=btn.getBoundingClientRect();
+          const dx=(e.clientX-(r.left+r.width/2))/Math.max(r.width/2,1);
+          const dy=(e.clientY-(r.top+r.height/2))/Math.max(r.height/2,1);
+          btn.style.setProperty('--bx',(dx*2.5).toFixed(1)+'px');
+          btn.style.setProperty('--by',(dy*1.5).toFixed(1)+'px');
+        });
+        const reset=()=>{btn.style.setProperty('--bx','0px');btn.style.setProperty('--by','0px')};
+        btn.addEventListener('pointerleave',reset);
+        btn.addEventListener('blur',reset);
+      });
+    }
+
     // ---------- Parallax del "BJJ" gigante ----------
     const hero=document.querySelector('.hero');
     if(hero&&!reduce()){
@@ -1038,99 +1053,7 @@ document.getElementById('booking-form').addEventListener('submit',event=>{event.
       move();
     }
 
-    // ---------- Botones magnéticos ----------
-    if(fineHover&&!reduce()){
-      document.querySelectorAll('.nav .btn,.hero-actions .btn,.plan-panel .btn,.booking-form .btn,.mobile-bottom .btn').forEach(btn=>{
-        btn.classList.add('magnet');
-        btn.addEventListener('pointermove',e=>{
-          const r=btn.getBoundingClientRect();
-          const dx=(e.clientX-(r.left+r.width/2))/Math.max(r.width/2,1);
-          const dy=(e.clientY-(r.top+r.height/2))/Math.max(r.height/2,1);
-          btn.style.setProperty('--bx',(dx*6).toFixed(1)+'px');
-          btn.style.setProperty('--by',(dy*5).toFixed(1)+'px');
-        });
-        const reset=()=>{btn.style.setProperty('--bx','0px');btn.style.setProperty('--by','0px')};
-        btn.addEventListener('pointerleave',reset);
-        btn.addEventListener('blur',reset);
-      });
-    }
-
-    // ---------- Cursor personalizado ----------
-    if(fineHover&&!reduce()){
-      const dot=document.createElement('div');
-      dot.className='cursor-dot';
-      dot.setAttribute('aria-hidden','true');
-      dot.dataset.label='Arrastra';
-      document.body.appendChild(dot);
-      let tx=-100,ty=-100,cx=-100,cy=-100,active=false,rafId=0;
-      let onGallery=false,dragHintTimer=0,dragHintShown=false;
-      const paint=()=>{
-        rafId=0;
-        cx+=(tx-cx)*.22; cy+=(ty-cy)*.22;
-        dot.style.setProperty('--cx',cx.toFixed(1)+'px');
-        dot.style.setProperty('--cy',cy.toFixed(1)+'px');
-        if(active)rafId=requestAnimationFrame(paint);
-      };
-      const start=()=>{ if(!active){active=true;document.body.classList.add('has-cursor');if(!rafId)rafId=requestAnimationFrame(paint)} };
-      const stop=()=>{
-        active=false; document.body.classList.remove('has-cursor');
-        if(rafId){cancelAnimationFrame(rafId);rafId=0}
-        clearTimeout(dragHintTimer); onGallery=false; dot.classList.remove('is-drag');
-      };
-      addEventListener('pointermove',e=>{
-        if(e.pointerType&&e.pointerType!=='mouse')return;
-        tx=e.clientX; ty=e.clientY; start();
-        const overGallery=!!e.target.closest('.gal-track');
-        const onCanvas=!!e.target.closest('.hero-canvas');
-        // Pista "Arrastra": se muestra una sola vez y se desvanece sola.
-        if(overGallery){
-          if(!onGallery){
-            onGallery=true;
-            if(!dragHintShown){
-              dot.classList.add('is-drag');
-              clearTimeout(dragHintTimer);
-              dragHintTimer=setTimeout(()=>{
-                dragHintShown=true;
-                dot.classList.remove('is-drag');
-              },1300);
-            }
-          }
-        } else if(onGallery){
-          onGallery=false;
-          clearTimeout(dragHintTimer);
-          dot.classList.remove('is-drag');
-        }
-        dot.classList.toggle('is-grow',onCanvas||(!overGallery&&!!e.target.closest('a,button,summary')));
-      },{passive:true});
-      document.addEventListener('pointerleave',stop,{passive:true});
-      addEventListener('blur',stop);
-    }
-
-    // ---------- Lenis: scroll con inercia ----------
-    function initLenis(){
-      if(!window.Lenis||reduce())return;
-      const lenis=new Lenis({lerp:.09,wheelMultiplier:1,touchMultiplier:1.6,smoothWheel:true,syncTouch:false});
-      window.__lenis=lenis;
-      const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)};
-      requestAnimationFrame(raf);
-      document.addEventListener('click',e=>{
-        const a=e.target.closest('a[href^="#"]');
-        if(!a)return;
-        const id=a.getAttribute('href');
-        if(!id||id.length<2)return;
-        const target=document.getElementById(id.slice(1));
-        if(!target)return;
-        e.preventDefault();
-        // Lenis ya descuenta el scroll-padding-top del documento: no sumamos offset propio.
-        lenis.scrollTo(target,{duration:1.15});
-        if(history.pushState)history.pushState(null,'',id);
-        target.setAttribute('tabindex','-1');
-        target.focus({preventScroll:true});
-      },false);
-    }
-    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initLenis,{once:true});
-    else initLenis();
-
+    
     // Recalcular la cortina cuando cambian las fuentes o el layout.
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(syncStack);
     addEventListener('load',syncStack,{once:true});
